@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+src-tauri/target/
+src-tauri/gen/
+
+.DS_Store
+*.pdf
+
+## Panda
+styled-system
