@@ -1,0 +1,49 @@
+{
+  "name": "reading-supporter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "format": "oxfmt . --write",
+    "format:check": "oxfmt . --check",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "prepare": "panda codegen",
+    "start": "next start",
+    "tauri": "tauri",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@assistant-ui/react": "^0.15.13",
+    "@embedpdf/core": "2.15.0",
+    "@embedpdf/engines": "2.15.0",
+    "@embedpdf/plugin-document-manager": "2.15.0",
+    "@embedpdf/plugin-interaction-manager": "2.15.0",
+    "@embedpdf/plugin-render": "2.15.0",
+    "@embedpdf/plugin-scroll": "2.15.0",
+    "@embedpdf/plugin-selection": "2.15.0",
+    "@embedpdf/plugin-viewport": "2.15.0",
+    "@embedpdf/plugin-zoom": "2.15.0",
+    "@tauri-apps/api": "^2.11.1",
+    "@tauri-apps/plugin-dialog": "^2.4.0",
+    "next": "16.3.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-error-boundary": "^6.0.0"
+  },
+  "devDependencies": {
+    "@pandacss/dev": "^1.12.0",
+    "@tauri-apps/cli": "^2.8.4",
+    "@tsconfig/strictest": "2.0.8",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "oxfmt": "0.61.0",
+    "oxlint": "1.76.0",
+    "oxlint-tsgolint": "0.25.0",
+    "typescript": "7.0.2"
+  },
+  "packageManager": "pnpm@11.17.0"
+}

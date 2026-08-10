@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "references": {
+    "embedpdf": {
+      "repository": "embedpdf/embed-pdf-viewer",
+      "branch": "main",
+      "description": "EmbedPDF is a framework‑agnostic, Apache‑2.0‑licensed PDF viewer that drops into any JavaScript project."
+    },
+    "tauri": {
+      "repository": "tauri-apps/tauri",
+      "branch": "main",
+      "description": "Tauri is a framework for building tiny, blazingly fast binaries for all major operating systems."
+    },
+    "nextjs": {
+      "repository": "vercel/next.js",
+      "branch": "main",
+      "description": "Used by some of the world's largest companies, Next.js enables you to create full-stack web applications by extending the latest React features, and integrating powerful Rust-based JavaScript tooling for the fastest builds."
+    },
+    "assistant-ui": {
+      "repository": "assistant-ui/assistant-ui",
+      "branch": "main",
+      "description": "assistant-ui is an open-source TypeScript/React library to build production-grade AI chat experiences fast."
+    }
+  }
+}
