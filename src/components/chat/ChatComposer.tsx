@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
 import { ComposerPrimitive } from "@assistant-ui/react";
-import { useChatSubmit } from "use-chat-submit";
+import { getUserAgentSummary, useChatSubmit } from "use-chat-submit";
 import type { SubmitMode } from "use-chat-submit";
 import { css } from "../../../styled-system/css";
 
@@ -146,11 +147,84 @@ function writeStoredMode(mode: SubmitMode) {
   }
 }
 
-function formatSubmitHint(mode: SubmitMode, keys: string[] | undefined): string {
-  if (keys && keys.length > 0) {
-    return `${keys.join("")} 送信`;
+function modKeyLabel(isApple: boolean | undefined): string {
+  if (isApple === false) {
+    return "Ctrl";
   }
-  return mode === "mod-enter" ? "⌘⏎ 送信" : "⏎ 送信";
+  if (isApple === true) {
+    return "⌘";
+  }
+  return "Ctrl/⌘";
+}
+
+function formatSubmitHint(
+  mode: SubmitMode,
+  keys: string[] | undefined,
+  isApple: boolean | undefined,
+): string {
+  if (keys && keys.length > 0) {
+    return `${keys.join(" + ")} 送信`;
+  }
+  if (mode === "enter") {
+    return "⏎ 送信";
+  }
+  return `${modKeyLabel(isApple)} + ⏎ 送信`;
+}
+
+function describeMode(mode: SubmitMode, isApple: boolean | undefined): string {
+  const mod = modKeyLabel(isApple);
+  if (mode === "mod-enter") {
+    return `Enter=改行 / ${mod}+Enter=送信`;
+  }
+  return `Enter=送信 / ${mod}+Enter=改行`;
+}
+
+function insertNewlineAtCaret(textarea: HTMLTextAreaElement) {
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  textarea.setRangeText("\n", start, end, "end");
+  textarea.dispatchEvent(
+    new InputEvent("input", {
+      bubbles: true,
+      cancelable: true,
+      inputType: "insertLineBreak",
+      data: "\n",
+    }),
+  );
+}
+
+function shouldInsertModNewline(
+  event: KeyboardEvent<HTMLTextAreaElement>,
+  mode: SubmitMode,
+): boolean {
+  return (
+    mode === "enter" &&
+    !event.repeat &&
+    (event.metaKey || event.ctrlKey) &&
+    event.key === "Enter" &&
+    !event.shiftKey &&
+    !event.nativeEvent.isComposing
+  );
+}
+
+function usePersistedSubmitMode() {
+  const [mode, setMode] = useState<SubmitMode>("mod-enter");
+  const [isApple, setIsApple] = useState<boolean | undefined>(undefined);
+
+  useEffect(() => {
+    setMode(readStoredMode());
+    setIsApple(getUserAgentSummary()?.isAppleDevice);
+  }, []);
+
+  const isEnterMode = mode === "enter";
+  const nextMode: SubmitMode = isEnterMode ? "mod-enter" : "enter";
+
+  const toggleMode = () => {
+    setMode(nextMode);
+    writeStoredMode(nextMode);
+  };
+
+  return { mode, isApple, isEnterMode, nextMode, toggleMode };
 }
 
 type ChatComposerProps = {
@@ -161,11 +235,7 @@ type ChatComposerProps = {
 
 export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: ChatComposerProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [mode, setMode] = useState<SubmitMode>("mod-enter");
-
-  useEffect(() => {
-    setMode(readStoredMode());
-  }, []);
+  const { mode, isApple, isEnterMode, nextMode, toggleMode } = usePersistedSubmitMode();
 
   useEffect(() => {
     if (askFocusToken > 0) {
@@ -176,6 +246,7 @@ export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: Ch
   const { getTextareaProps, shortcutHintLabels } = useChatSubmit({
     mode,
     modKey: "auto",
+    enabled: true,
     onSubmit: (_value, ctx) => {
       ctx.target.closest("form")?.requestSubmit();
     },
@@ -184,31 +255,17 @@ export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: Ch
   const { ref: textareaRef, onKeyDown } = getTextareaProps({
     ref: inputRef,
     onKeyDown: (event) => {
-      if (mode !== "enter") {
-        return;
-      }
-      if (!(event.metaKey || event.ctrlKey)) {
-        return;
-      }
-      if (event.key !== "Enter" || event.shiftKey) {
-        return;
-      }
-      if (event.nativeEvent.isComposing) {
+      if (!shouldInsertModNewline(event, mode)) {
         return;
       }
       event.preventDefault();
-      document.execCommand("insertText", false, "\n");
+      insertNewlineAtCaret(event.currentTarget);
     },
   });
 
-  const submitHint = formatSubmitHint(mode, shortcutHintLabels?.submit.keys);
-  const isModEnter = mode === "mod-enter";
-
-  const toggleMode = () => {
-    const next: SubmitMode = isModEnter ? "enter" : "mod-enter";
-    setMode(next);
-    writeStoredMode(next);
-  };
+  const submitHint = formatSubmitHint(mode, shortcutHintLabels?.submit.keys, isApple);
+  const toggleAriaLabel = `現在: ${submitHint}。クリックで ${describeMode(nextMode, isApple)} に切替`;
+  const toggleTitle = `${describeMode(mode, isApple)}（クリックで切替）`;
 
   return (
     <ComposerPrimitive.Root className={composer} onFocusCapture={onAskFocus}>
@@ -232,13 +289,9 @@ export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: Ch
           type="button"
           className={modeToggle}
           onClick={toggleMode}
-          aria-pressed={isModEnter}
-          aria-label={`送信ショートカットを切り替え（現在: ${submitHint}）`}
-          title={
-            isModEnter
-              ? "Enterで改行 / ⌘Enterで送信（クリックで切替）"
-              : "Enterで送信 / ⌘Enterで改行（クリックで切替）"
-          }
+          aria-pressed={isEnterMode}
+          aria-label={toggleAriaLabel}
+          title={toggleTitle}
         >
           {submitHint}
         </button>
