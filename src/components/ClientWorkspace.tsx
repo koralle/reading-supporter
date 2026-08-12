@@ -2,15 +2,22 @@
 
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import { css } from "../../styled-system/css";
+import { styled } from "../../styled-system/jsx";
+import { ErrorBoundary } from "react-error-boundary";
 
-const appLoading = css({
-  minHeight: "100vh",
-  display: "grid",
-  placeItems: "center",
-  color: "inkSoft",
-  letterSpacing: "0.02em",
-});
+function AppLoading() {
+  return (
+    <styled.div
+      display="grid"
+      minBlockSize="100svh"
+      placeContent="center"
+      color="inkSoft"
+      letterSpacing="0.02em"
+    >
+      Preparing your reading desk...
+    </styled.div>
+  );
+}
 
 const Workspace = dynamic(() => import("./workspace/Workspace"), {
   ssr: false,
@@ -18,8 +25,10 @@ const Workspace = dynamic(() => import("./workspace/Workspace"), {
 
 export default function ClientWorkspace() {
   return (
-    <Suspense fallback={<div className={appLoading}>Preparing your reading desk...</div>}>
-      <Workspace />
-    </Suspense>
+    <ErrorBoundary fallback={<p>Cloud not load the application.</p>}>
+      <Suspense fallback={<AppLoading />}>
+        <Workspace />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
