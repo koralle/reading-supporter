@@ -91,6 +91,13 @@ export default defineConfig({
       },
     },
     {
+      files: ["src/**/*.test.mjs"],
+      rules: {
+        "import/no-nodejs-modules": "off",
+        "import/no-unassigned-import": "off",
+      },
+    },
+    {
       files: [
         "next.config.ts",
         "oxfmt.config.ts",

@@ -4,6 +4,7 @@ import { EmbedPDF } from "@embedpdf/core/react";
 import { usePdfiumEngine } from "@embedpdf/engines/react";
 import { css } from "../../../styled-system/css";
 import { EmptyReader } from "./empty-reader";
+import { PdfOutline } from "./pdf-outline";
 import { PdfDocumentView } from "./pdf-document-view";
 import { PdfToolbar } from "./pdf-toolbar";
 import { pdfPlugins } from "./pdfPlugins";
@@ -56,6 +57,16 @@ const pdfStage = css({
     "linear-gradient(180deg, rgba(255, 254, 250, 0.35), transparent 28%), {colors.pdfStage}",
 });
 
+const readerBody = css({
+  minHeight: "0",
+  display: "grid",
+  gridTemplateColumns: "224px minmax(0, 1fr)",
+  mdDown: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "auto minmax(0, 1fr)",
+  },
+});
+
 type PdfReaderProps = {
   onSelectionChange: (text: string) => void;
   onAskSelection?: (() => void) | undefined;
@@ -83,18 +94,21 @@ export function PdfReader({ onSelectionChange, onAskSelection }: PdfReaderProps)
       {({ activeDocumentId }) => (
         <>
           <PdfToolbar />
-          <div className={pdfStage}>
-            {activeDocumentId ? (
-              <>
-                <SelectionCapture
-                  documentId={activeDocumentId}
-                  onSelectionChange={onSelectionChange}
-                />
-                <PdfDocumentView documentId={activeDocumentId} onAskSelection={onAskSelection} />
-              </>
-            ) : (
-              <EmptyReader />
-            )}
+          <div className={readerBody}>
+            <PdfOutline engine={engine} />
+            <div className={pdfStage}>
+              {activeDocumentId ? (
+                <>
+                  <SelectionCapture
+                    documentId={activeDocumentId}
+                    onSelectionChange={onSelectionChange}
+                  />
+                  <PdfDocumentView documentId={activeDocumentId} onAskSelection={onAskSelection} />
+                </>
+              ) : (
+                <EmptyReader />
+              )}
+            </div>
           </div>
         </>
       )}

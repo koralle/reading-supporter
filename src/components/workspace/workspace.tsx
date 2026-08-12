@@ -14,14 +14,14 @@ const workspace = css({
     height: "100dvh",
     minHeight: "100dvh",
   },
-  padding: "20px",
+  padding: "12px",
   display: "grid",
   gridTemplateRows: "auto 1fr",
-  gap: "16px",
+  gap: "10px",
   overflow: "hidden",
   mdDown: {
-    padding: "12px",
-    gap: "12px",
+    padding: "8px",
+    gap: "8px",
   },
   smDown: {
     padding: "8px",
@@ -31,8 +31,8 @@ const workspace = css({
 const desk = css({
   minHeight: "0",
   display: "grid",
-  gridTemplateColumns: "minmax(0, 1.08fr) minmax(360px, 0.92fr)",
-  gap: "16px",
+  gridTemplateColumns: "minmax(0, 1.18fr) minmax(340px, 0.82fr)",
+  gap: "10px",
   mdDown: {
     gridTemplateColumns: "1fr",
     gridTemplateRows: "1fr",
@@ -46,11 +46,11 @@ const panel = css({
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "line",
-  borderRadius: "panel",
+  borderRadius: "panelCompact",
   background: "white",
   boxShadow: "panel",
   smDown: {
-    borderRadius: "panelCompact",
+    borderRadius: "10px",
   },
 });
 
