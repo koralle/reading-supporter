@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary, getErrorMessage } from "react-error-boundary";
 import { css } from "../../../styled-system/css";
-import { AcpConnectionStatus } from "./AcpConnectionStatus";
+import { AcpConnectionStatus } from "./acp-connection-status";
 
 const chatHeading = css({
   display: "flex",

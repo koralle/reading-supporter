@@ -1,7 +1,7 @@
 "use client";
 
 import { css } from "../../../styled-system/css";
-import { MobilePaneSwitcher, type MobilePane } from "./MobilePaneSwitcher";
+import { MobilePaneSwitcher, type MobilePane } from "./mobile-pane-switcher";
 
 const appHeader = css({
   display: "flex",

@@ -8,8 +8,8 @@ import {
 } from "@assistant-ui/react";
 import { acpClient, createPrompt, textFromMessage } from "../../lib/acp";
 import { css } from "../../../styled-system/css";
-import { ChatHeader } from "./ChatHeader";
-import { ChatThread } from "./ChatThread";
+import { ChatHeader } from "./chat-header";
+import { ChatThread } from "./chat-thread";
 
 const chatThread = css({
   minHeight: "0",

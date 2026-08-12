@@ -2,10 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { cx, css } from "../../../styled-system/css";
-import { ChatPanel } from "../chat/ChatPanel";
-import { PdfReader } from "../pdf/PdfReader";
-import { WorkspaceHeader } from "./WorkspaceHeader";
-import type { MobilePane } from "./MobilePaneSwitcher";
+import { ChatPanel } from "../chat/chat-panel";
+import { PdfReader } from "../pdf/pdf-reader";
+import { WorkspaceHeader } from "./workspace-header";
+import type { MobilePane } from "./mobile-pane-switcher";
 
 const workspace = css({
   height: "100vh",

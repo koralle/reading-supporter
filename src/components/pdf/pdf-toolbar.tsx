@@ -8,7 +8,7 @@ import {
 import { open } from "@tauri-apps/plugin-dialog";
 import { isTauriRuntime, readSelectedPdf } from "../../lib/tauri";
 import { css } from "../../../styled-system/css";
-import { OpenPdfSubmit } from "./OpenPdfSubmit";
+import { OpenPdfSubmit } from "./open-pdf-submit";
 
 const panelBar = css({
   minHeight: "62px",

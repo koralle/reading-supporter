@@ -19,7 +19,7 @@ function AppLoading() {
   );
 }
 
-const Workspace = dynamic(() => import("./workspace/Workspace"), {
+const Workspace = dynamic(() => import("./workspace/workspace"), {
   ssr: false,
 });
 

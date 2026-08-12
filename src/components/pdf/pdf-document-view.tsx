@@ -7,7 +7,7 @@ import { Scroller } from "@embedpdf/plugin-scroll/react";
 import { SelectionLayer } from "@embedpdf/plugin-selection/react";
 import { Viewport } from "@embedpdf/plugin-viewport/react";
 import { css } from "../../../styled-system/css";
-import { SelectionMenu } from "./SelectionMenu";
+import { SelectionMenu } from "./selection-menu";
 
 const pdfEmpty = css({
   height: "100%",

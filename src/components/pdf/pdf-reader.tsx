@@ -3,11 +3,11 @@
 import { EmbedPDF } from "@embedpdf/core/react";
 import { usePdfiumEngine } from "@embedpdf/engines/react";
 import { css } from "../../../styled-system/css";
-import { EmptyReader } from "./EmptyReader";
-import { PdfDocumentView } from "./PdfDocumentView";
-import { PdfToolbar } from "./PdfToolbar";
+import { EmptyReader } from "./empty-reader";
+import { PdfDocumentView } from "./pdf-document-view";
+import { PdfToolbar } from "./pdf-toolbar";
 import { pdfPlugins } from "./pdfPlugins";
-import { SelectionCapture } from "./SelectionCapture";
+import { SelectionCapture } from "./selection-capture";
 
 const panelBar = css({
   minHeight: "62px",

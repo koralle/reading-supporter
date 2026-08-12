@@ -2,9 +2,9 @@
 
 import { ThreadPrimitive } from "@assistant-ui/react";
 import { css } from "../../../styled-system/css";
-import { ChatComposer } from "./ChatComposer";
-import { ChatMessage } from "./ChatMessage";
-import { ChatWelcome } from "./ChatWelcome";
+import { ChatComposer } from "./chat-composer";
+import { ChatMessage } from "./chat-message";
+import { ChatWelcome } from "./chat-welcome";
 
 const threadRoot = css({
   height: "100%",
