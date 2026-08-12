@@ -1,7 +1,7 @@
 import { defineConfig } from "@pandacss/dev";
+import { globalCss } from "./src/styles/global-styles.panda";
 
 export default defineConfig({
-  // Keep the previous globals.css reset surface; avoid Panda preflight drift.
   preflight: false,
   include: ["./src/**/*.{js,jsx,ts,tsx}"],
   exclude: [],
@@ -33,7 +33,7 @@ export default defineConfig({
           chatBg: { value: "#f9f8f3" },
           pdfStage: { value: "#deded6" },
           placeholder: { value: "#9a9b93" },
-          scrollbar: { value: "#c8c9c1" },
+          scrollbar: { value: "#86877f" },
           glass: { value: "rgba(255, 254, 250, 0.82)" },
         },
         fonts: {
@@ -57,26 +57,5 @@ export default defineConfig({
       },
     },
   },
-  globalCss: {
-    "*": {
-      boxSizing: "border-box",
-    },
-    html: {
-      minHeight: "100%",
-    },
-    body: {
-      minHeight: "100%",
-      margin: 0,
-      background:
-        "radial-gradient(circle at top left, rgba(113, 129, 109, 0.12), transparent 34%), linear-gradient(160deg, #f7f6f1 0%, {colors.paper} 48%, #ecebe4 100%)",
-      color: "ink",
-      fontFamily: "body",
-    },
-    "button, textarea": {
-      font: "inherit",
-    },
-    button: {
-      cursor: "pointer",
-    },
-  },
+  globalCss,
 });
