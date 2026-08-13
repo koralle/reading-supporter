@@ -2,9 +2,9 @@ import { defineGlobalStyles } from "@pandacss/dev";
 
 // Based on kiso.css v1.2.4 (MIT) https://github.com/tak-dcxi/kiso.css
 // Keep the previous globals.css reset surface; avoid Panda preflight drift.
-// Deviations: color-scheme: light (light-only theme);
+// Deviations: color-scheme: light dark with token-level light-dark();
 // Body background/color/font from app tokens; text-decoration-inset omitted (initial value is auto);
-// Active press feedback added (tap-highlight is transparent).
+// Active press feedback added (tap-highlight is transparent), gated on no-preference.
 export const globalCss = defineGlobalStyles({
   // MARK: Universal
   "*, ::before, ::after": {
@@ -39,9 +39,8 @@ export const globalCss = defineGlobalStyles({
     // スティッキーフッター対策の最低高。動的ビューポートのブロック方向。
     minBlockSize: "100dvb",
     margin: "unset",
-    background:
-      "radial-gradient(circle at top left, rgba(113, 129, 109, 0.12), transparent 34%), linear-gradient(160deg, #f7f6f1 0%, {colors.paper} 48%, #ecebe4 100%)",
-    color: "ink",
+    background: "surface",
+    color: "fg",
     fontFamily: "body",
   },
 
@@ -207,29 +206,34 @@ export const globalCss = defineGlobalStyles({
       backgroundColor: "Canvas",
     },
   },
-  ':where(input:is([type="tel" i], [type="url" i], [type="email" i], [type="number" i]):not(:placeholder-shown))': {
-    // 値が入力された状態では RTL でも左寄せを維持。
-    direction: "ltr",
-  },
+  ':where(input:is([type="tel" i], [type="url" i], [type="email" i], [type="number" i]):not(:placeholder-shown))':
+    {
+      // 値が入力された状態では RTL でも左寄せを維持。
+      direction: "ltr",
+    },
   ":where(textarea)": {
     marginBlock: "unset",
     resize: "block",
   },
-  ':where(input:not([type="button" i], [type="submit" i], [type="reset" i]), textarea, [contenteditable])': {
-    // 入力中に text-autospace による空白挿入が起きないようにする。
-    textAutospace: "no-autospace",
-  },
-  ':where(button, input:is([type="button" i], [type="submit" i], [type="reset" i])), ::file-selector-button': {
-    backgroundColor: "unset",
-  },
-  ':where(button, input:is([type="button" i], [type="submit" i], [type="reset" i]), [role="tab" i], [role="button" i], [role="option" i]), ::file-selector-button': {
-    // ダブルタップズームを無効化（iOS）。
-    touchAction: "manipulation",
-  },
-  ':where(button:enabled, label[for], select:enabled, input:is([type="button" i], [type="submit" i], [type="reset" i], [type="radio" i], [type="checkbox" i]):enabled, [role="tab" i], [role="button" i], [role="option" i]), :where(:enabled)::file-selector-button': {
-    // クリック可能な要素のみポインターカーソル。
-    cursor: "pointer",
-  },
+  ':where(input:not([type="button" i], [type="submit" i], [type="reset" i]), textarea, [contenteditable])':
+    {
+      // 入力中に text-autospace による空白挿入が起きないようにする。
+      textAutospace: "no-autospace",
+    },
+  ':where(button, input:is([type="button" i], [type="submit" i], [type="reset" i])), ::file-selector-button':
+    {
+      backgroundColor: "unset",
+    },
+  ':where(button, input:is([type="button" i], [type="submit" i], [type="reset" i]), [role="tab" i], [role="button" i], [role="option" i]), ::file-selector-button':
+    {
+      // ダブルタップズームを無効化（iOS）。
+      touchAction: "manipulation",
+    },
+  ':where(button:enabled, label[for], select:enabled, input:is([type="button" i], [type="submit" i], [type="reset" i], [type="radio" i], [type="checkbox" i]):enabled, [role="tab" i], [role="button" i], [role="option" i]), :where(:enabled)::file-selector-button':
+    {
+      // クリック可能な要素のみポインターカーソル。
+      cursor: "pointer",
+    },
   ":where(fieldset)": {
     // 子要素による fieldset の引き伸ばしを防ぐ。
     minInlineSize: "0",
@@ -283,7 +287,7 @@ export const globalCss = defineGlobalStyles({
     // フォーカスリングと内容の間に余白を追加。
     outlineOffset: "3px",
   },
-  "[tabindex=\"-1\"]:focus": {
+  '[tabindex="-1"]:focus': {
     // プログラム的なフォーカスにはアウトラインを表示しない。
     outline: "none!",
   },
@@ -293,10 +297,11 @@ export const globalCss = defineGlobalStyles({
     // 無効要素は非インタラクティブ状態を反映して既定カーソル。
     cursor: "default",
   },
-  ':where(button, [role="tab" i], [role="button" i], [role="option" i]):active:not(:disabled, [aria-disabled="true" i])': {
-    // タップハイライトを透明化した代わりに、押下時は下に沈むフィードバックを付ける。
-    transform: "translateY(1px)",
-  },
+  ':where(button, [role="tab" i], [role="button" i], [role="option" i]):active:not(:disabled, [aria-disabled="true" i])':
+    {
+      // タップハイライトを透明化した代わりに、押下時は下に沈むフィードバックを付ける。
+      transform: "translateY(1px)",
+    },
   '[hidden]:not([hidden="until-found" i])': {
     // 非表示意図の要素が表示されないことを保証。
     display: "none!",

@@ -14,20 +14,20 @@ const threadViewport = css({
   height: "100%",
   minHeight: "0",
   overflowY: "auto",
-  padding: "24px 20px 18px",
+  overscrollBehavior: "contain",
+  padding: "16px",
   scrollbarColor: "{colors.scrollbar} transparent",
   smDown: {
-    paddingLeft: "12px",
-    paddingRight: "12px",
+    paddingInline: "12px",
   },
 });
 
 const composerWrap = css({
   position: "sticky",
   bottom: "0",
-  marginTop: "24px",
+  marginTop: "16px",
   paddingTop: "12px",
-  background: "linear-gradient(to bottom, transparent, {colors.chatBg} 15%)",
+  background: "linear-gradient(to bottom, transparent, {colors.surface} 15%)",
 });
 
 type ChatThreadProps = {

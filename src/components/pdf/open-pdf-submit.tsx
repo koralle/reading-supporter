@@ -5,37 +5,43 @@ import { css } from "../../../styled-system/css";
 
 const openButton = css({
   border: "0",
-  borderRadius: "pill",
-  background: "sageDark",
-  color: "white",
-  fontSize: "12px",
-  fontWeight: "700",
-  padding: "10px 14px",
-  transition: "background 160ms ease, transform 160ms ease",
+  borderRadius: "control",
+  background: "primary",
+  color: "surface",
+  fontSize: "14px",
+  fontWeight: "600",
+  minHeight: "36px",
+  paddingInline: "12px",
+  transition: "background 160ms ease",
   _disabled: {
     cursor: "progress",
     opacity: "0.72",
-    transform: "none",
   },
   _hover: {
     _enabled: {
-      background: "sageHover",
-      transform: "translateY(-1px)",
+      background: "primaryHover",
     },
   },
   _motionReduce: {
     transition: "none",
-    _hover: {
-      transform: "none",
-    },
   },
 });
 
-export function OpenPdfSubmit() {
+type OpenPdfSubmitProps = {
+  disabled?: boolean | undefined;
+};
+
+export function OpenPdfSubmit({ disabled = false }: OpenPdfSubmitProps) {
   const { pending } = useFormStatus();
+  const isDisabled = disabled || pending;
   return (
-    <button className={openButton} type="submit" disabled={pending} aria-busy={pending}>
-      {pending ? "Opening…" : "Open PDF"}
+    <button
+      className={openButton}
+      type={disabled ? "button" : "submit"}
+      disabled={isDisabled}
+      aria-busy={pending}
+    >
+      {pending ? "開いています…" : "PDFを開く"}
     </button>
   );
 }

@@ -49,14 +49,14 @@ const outlineShell = css({
   borderRightWidth: "1px",
   borderRightStyle: "solid",
   borderRightColor: "line",
-  background: "white",
+  background: "surface",
   mdDown: {
     gridTemplateRows: "auto",
     borderRight: "0",
     borderBottomWidth: "1px",
     borderBottomStyle: "solid",
     borderBottomColor: "line",
-    background: "paper",
+    background: "stage",
     '&[data-open="true"]': {
       gridTemplateRows: "auto minmax(0, 240px)",
     },
@@ -77,18 +77,9 @@ const outlineHeader = css({
 
 const outlineHeading = css({
   margin: "0",
-  color: "ink",
-  fontSize: "13px",
-  fontWeight: "700",
-});
-
-const outlineKicker = css({
-  margin: "0 0 2px",
-  color: "inkSoft",
-  fontFamily: "mono",
-  fontSize: "9px",
-  letterSpacing: "0.08em",
-  textTransform: "uppercase",
+  color: "fg",
+  fontSize: "14px",
+  fontWeight: "600",
 });
 
 const mobileToggle = css({
@@ -97,12 +88,12 @@ const mobileToggle = css({
   gap: "6px",
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "lineStrong",
-  borderRadius: "pill",
-  background: "glass",
-  padding: "6px 9px",
-  color: "inkSoft",
-  fontSize: "11px",
+  borderColor: "line",
+  borderRadius: "control",
+  background: "surface",
+  padding: "6px 8px",
+  color: "muted",
+  fontSize: "12px",
   fontWeight: "600",
   mdDown: {
     display: "inline-flex",
@@ -145,7 +136,8 @@ const outlineRow = css({
   paddingInlineStart: "calc(var(--outline-depth) * 13px)",
   borderRadius: "6px",
   '&[data-active="true"]': {
-    background: "rgba(113, 129, 109, 0.16)",
+    background: "primarySoft",
+    boxShadow: "inset 2px 0 0 {colors.primary}",
   },
 });
 
@@ -156,11 +148,11 @@ const outlineDisclosure = css({
   border: "0",
   borderRadius: "4px",
   background: "transparent",
-  color: "inkSoft",
+  color: "muted",
   fontSize: "12px",
   lineHeight: "1",
   "&:hover": {
-    background: "rgba(113, 129, 109, 0.12)",
+    background: "primarySoft",
   },
 });
 
@@ -177,17 +169,17 @@ const outlineLink = css({
   borderRadius: "4px",
   background: "transparent",
   padding: "7px 5px 7px 2px",
-  color: "inkSoft",
+  color: "muted",
   textAlign: "start",
-  fontSize: "11px",
+  fontSize: "12px",
   lineHeight: "1.35",
   "&:hover": {
-    background: "rgba(113, 129, 109, 0.08)",
-    color: "ink",
+    background: "primarySoft",
+    color: "fg",
   },
   '&[data-active="true"]': {
-    color: "sageDark",
-    fontWeight: "700",
+    color: "primary",
+    fontWeight: "600",
   },
   "&:disabled": {
     cursor: "default",
@@ -212,33 +204,29 @@ const outlinePage = css({
 });
 
 const outlineMessage = css({
-  padding: "22px 12px",
-  color: "inkSoft",
-  fontSize: "11px",
+  padding: "16px 12px",
+  color: "muted",
+  fontSize: "12px",
   lineHeight: "1.6",
 });
 
 const outlineRetry = css({
   marginTop: "10px",
-  border: "1px solid {colors.lineStrong}",
-  borderRadius: "pill",
+  border: "1px solid {colors.line}",
+  borderRadius: "control",
   background: "transparent",
-  padding: "5px 9px",
-  color: "sageDark",
-  fontSize: "11px",
+  padding: "6px 10px",
+  color: "primary",
+  fontSize: "12px",
   fontWeight: "600",
 });
 
 function OutlineLoading() {
-  return (
-    <output className={outlineMessage}>
-      目次を読み込み中…
-    </output>
-  );
+  return <output className={outlineMessage}>目次を読み込み中…</output>;
 }
 
 function OutlineEmpty() {
-  return <p className={outlineMessage}>PDFを開くと目次が表示されます。</p>;
+  return <p className={outlineMessage}>目次がありません。</p>;
 }
 
 function OutlineDocumentError() {
@@ -278,7 +266,7 @@ function OutlineTree({
   );
 
   if (bookmarks.length === 0) {
-    return <p className={outlineMessage}>この PDF には目次がありません。</p>;
+    return <p className={outlineMessage}>目次がありません。</p>;
   }
 
   const toggleExpanded = (id: string) => {
@@ -473,10 +461,7 @@ export function PdfOutline({ engine }: { engine: EmbedPdfEngine }) {
   return (
     <aside className={outlineShell} data-open={isOpen} aria-label="PDFの目次パネル">
       <div className={outlineHeader}>
-        <div>
-          <p className={outlineKicker}>Document map</p>
-          <h2 className={outlineHeading}>目次</h2>
-        </div>
+        <h2 className={outlineHeading}>目次</h2>
         <button
           aria-controls={OUTLINE_BODY_ID}
           aria-expanded={isOpen}

@@ -8,46 +8,27 @@ const threadWelcome = css({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  padding: "10px 2px 24px",
-});
-
-const eyebrow = css({
-  margin: "0 0 10px",
-  color: "sageDark",
-  fontFamily: "mono",
-  fontSize: "10px",
-  letterSpacing: "0.08em",
-  textTransform: "uppercase",
-});
-
-const welcomeTitle = css({
-  maxWidth: "390px",
-  margin: "0",
-  fontSize: "clamp(34px, 4vw, 52px)",
-  fontWeight: "400",
-  lineHeight: "0.98",
-  mdDown: {
-    fontSize: "clamp(30px, 9vw, 44px)",
-  },
+  padding: "8px 0 16px",
 });
 
 const welcomeBody = css({
-  maxWidth: "340px",
-  margin: "18px 0 0",
-  color: "inkSoft",
-  fontSize: "12px",
+  margin: "0",
+  color: "muted",
+  fontSize: "14px",
   lineHeight: "1.7",
 });
 
 const selectionReady = css({
-  color: "sageDark!",
+  marginTop: "8px",
+  color: "primary",
+  fontSize: "14px",
   fontWeight: "600",
 });
 
 const bridgeErrorStyle = css({
-  marginTop: "14px",
-  color: "error",
-  fontSize: "11px",
+  marginTop: "12px",
+  color: "danger",
+  fontSize: "12px",
   lineHeight: "1.5",
 });
 
@@ -60,16 +41,11 @@ export function ChatWelcome({ selectedText, bridgeError }: ChatWelcomeProps) {
   return (
     <ThreadPrimitive.Empty>
       <div className={threadWelcome}>
-        <p className={eyebrow}>A conversation with the text</p>
-        <h2 className={welcomeTitle}>What made you pause?</h2>
-        <p className={welcomeBody}>
-          Select a passage on the left and ask for a definition, a summary, or a second way to see
-          the author&apos;s argument.
-        </p>
+        <p className={welcomeBody}>テキストを選択して質問できます。</p>
         {selectedText.trim() ? (
-          <p className={selectionReady}>Passage selected — ask about it below.</p>
+          <p className={selectionReady}>選択した箇所について、下から質問できます。</p>
         ) : null}
-        {bridgeError && <p className={bridgeErrorStyle}>{bridgeError}</p>}
+        {bridgeError ? <p className={bridgeErrorStyle}>{bridgeError}</p> : null}
       </div>
     </ThreadPrimitive.Empty>
   );

@@ -11,14 +11,11 @@ import { SelectionMenu } from "./selection-menu";
 
 const pdfEmpty = css({
   height: "100%",
-  minHeight: "480px",
+  minHeight: "0",
   display: "grid",
   placeItems: "center",
   padding: "40px",
   textAlign: "center",
-  mdDown: {
-    minHeight: "calc(100dvh - 170px)",
-  },
 });
 
 const pdfError = css({
@@ -26,10 +23,10 @@ const pdfError = css({
   padding: "12px 14px",
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "errorBorder",
-  borderRadius: "error",
-  background: "errorBg",
-  color: "error",
+  borderColor: "dangerBorder",
+  borderRadius: "control",
+  background: "dangerBg",
+  color: "danger",
   fontSize: "12px",
 });
 
@@ -51,9 +48,9 @@ export function PdfDocumentView({ documentId, onAskSelection }: PdfDocumentViewP
     <DocumentContent documentId={documentId}>
       {({ isLoaded, isLoading: documentLoading, isError }) => {
         // Keep the stage mounted; only show a first-open placeholder, not a wipe of loaded pages.
-        if (isError) return <div className={pdfError}>This PDF could not be opened.</div>;
+        if (isError) return <div className={pdfError}>この PDF を開けませんでした。</div>;
         if (!isLoaded && documentLoading) {
-          return <div className={pdfEmpty}>Opening document...</div>;
+          return <div className={pdfEmpty}>読み込み中…</div>;
         }
         if (!isLoaded) return null;
 
@@ -68,6 +65,7 @@ export function PdfDocumentView({ documentId, onAskSelection }: PdfDocumentViewP
                     <SelectionLayer
                       documentId={documentId}
                       pageIndex={pageIndex}
+                      background="rgba(254, 240, 138, 0.85)"
                       selectionMenu={(props) => (
                         <SelectionMenu
                           {...props}

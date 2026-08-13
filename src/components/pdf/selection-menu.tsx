@@ -12,39 +12,39 @@ const menu = css({
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "line",
-  borderRadius: "pill",
-  background: "white",
+  borderRadius: "control",
+  background: "surface",
   padding: "4px",
-  boxShadow: "0 6px 22px rgba(41, 42, 34, 0.16)",
+  boxShadow: "menu",
   pointerEvents: "auto",
 });
 
 const menuButton = css({
   border: "0",
-  borderRadius: "pill",
+  borderRadius: "control",
   cursor: "pointer",
-  fontSize: "11px",
+  fontSize: "12px",
   fontWeight: "600",
-  minHeight: "26px",
+  minHeight: "28px",
   padding: "4px 12px",
   whiteSpace: "nowrap",
   transition: "background 140ms ease",
 });
 
 const askButton = css({
-  background: "sageDark",
-  color: "white",
+  background: "primary",
+  color: "surface",
   _hover: {
-    background: "sageHover",
+    background: "primaryHover",
   },
 });
 
 const copyButton = css({
   background: "transparent",
-  color: "inkSoft",
+  color: "muted",
   _hover: {
-    background: "sage",
-    color: "white",
+    background: "stage",
+    color: "fg",
   },
 });
 
@@ -75,17 +75,16 @@ export function SelectionMenu({
     onAskSelection?.();
   };
 
-  // Position above or below based on available space.
   const top = placement.suggestTop ? -(MENU_HEIGHT + 8) : rect.size.height + 8;
 
   return (
     <div {...menuWrapperProps}>
       <div className={menu} data-no-interaction style={{ top }}>
         <button type="button" className={cx(menuButton, askButton)} onClick={askSelection}>
-          Ask about this passage
+          この箇所について聞く
         </button>
         <button type="button" className={cx(menuButton, copyButton)} onClick={copySelection}>
-          Copy
+          コピー
         </button>
       </div>
     </div>

@@ -11,10 +11,10 @@ function AppLoading() {
       display="grid"
       minBlockSize="100svh"
       placeContent="center"
-      color="inkSoft"
-      letterSpacing="0.02em"
+      color="muted"
+      fontSize="14px"
     >
-      Preparing your reading desk...
+      読み込み中…
     </styled.div>
   );
 }
@@ -25,7 +25,7 @@ const Workspace = dynamic(() => import("./workspace/workspace"), {
 
 export default function ClientWorkspace() {
   return (
-    <ErrorBoundary fallback={<p>Cloud not load the application.</p>}>
+    <ErrorBoundary fallback={<p>アプリを読み込めませんでした。</p>}>
       <Suspense fallback={<AppLoading />}>
         <Workspace />
       </Suspense>

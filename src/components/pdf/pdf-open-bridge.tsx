@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import {
   useDocumentManagerCapability,
   useActiveDocument,
@@ -8,66 +8,47 @@ import {
 import { open } from "@tauri-apps/plugin-dialog";
 import { isTauriRuntime, readSelectedPdf } from "../../lib/tauri";
 import { css } from "../../../styled-system/css";
-import { OpenPdfSubmit } from "./open-pdf-submit";
-
-const panelBar = css({
-  minHeight: "62px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: "16px",
-  borderBottomWidth: "1px",
-  borderBottomStyle: "solid",
-  borderBottomColor: "line",
-  padding: "13px 16px",
-  smDown: {
-    paddingLeft: "12px",
-    paddingRight: "12px",
-  },
-});
-
-const panelKicker = css({
-  margin: "0 0 4px",
-  color: "inkSoft",
-  fontFamily: "mono",
-  fontSize: "10px",
-  letterSpacing: "0.08em",
-  textTransform: "uppercase",
-});
-
-const documentName = css({
-  maxWidth: "34vw",
-  overflow: "hidden",
-  margin: "0",
-  fontSize: "13px",
-  fontWeight: "600",
-  textOverflow: "ellipsis",
-  whiteSpace: "nowrap",
-  mdDown: {
-    maxWidth: "48vw",
-  },
-});
 
 const pdfError = css({
-  margin: "20px",
+  margin: "16px",
   padding: "12px 14px",
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "errorBorder",
-  borderRadius: "error",
-  background: "errorBg",
-  color: "error",
-  fontSize: "12px",
+  borderColor: "dangerBorder",
+  borderRadius: "control",
+  background: "dangerBg",
+  color: "danger",
+  fontSize: "14px",
 });
 
-export function PdfToolbar() {
+export type PdfChrome = {
+  documentName: string | null;
+  error: string | null;
+  openPdf: (() => Promise<void>) | null;
+};
+
+const IDLE_CHROME: PdfChrome = {
+  documentName: null,
+  error: null,
+  openPdf: null,
+};
+
+type PdfOpenBridgeProps = {
+  onChromeChange: (chrome: PdfChrome) => void;
+};
+
+export function idlePdfChrome(): PdfChrome {
+  return IDLE_CHROME;
+}
+
+export function PdfOpenBridge({ onChromeChange }: PdfOpenBridgeProps) {
   const { activeDocument } = useActiveDocument();
   const { provides: docManager } = useDocumentManagerCapability();
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
   const [, startTransition] = useTransition();
 
-  const openPdfAction = async () => {
+  const openPdf = useCallback(async () => {
     if (!docManager) return;
     setError(null);
 
@@ -87,9 +68,9 @@ export function PdfToolbar() {
       }
       inputRef.current?.click();
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "The PDF could not be opened.");
+      setError(reason instanceof Error ? reason.message : "PDF を開けませんでした。");
     }
-  };
+  }, [docManager]);
 
   const onFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -103,24 +84,27 @@ export function PdfToolbar() {
           .openDocumentBuffer({ buffer: await file.arrayBuffer(), name: file.name })
           .toPromise();
       } catch (reason) {
-        setError(reason instanceof Error ? reason.message : "The PDF could not be opened.");
+        setError(reason instanceof Error ? reason.message : "PDF を開けませんでした。");
       }
     });
   };
 
+  useEffect(() => {
+    onChromeChange({
+      documentName: activeDocument?.name ?? null,
+      error,
+      openPdf,
+    });
+  }, [activeDocument?.name, docManager, error, onChromeChange, openPdf]);
+
   return (
-    <div className={panelBar}>
-      <div>
-        <p className={panelKicker}>Reader / PDF</p>
-        <p className={documentName}>{activeDocument?.name ?? "No document open"}</p>
-        {error && <p className={pdfError}>{error}</p>}
-      </div>
-      <div>
-        <form action={openPdfAction}>
-          <OpenPdfSubmit />
-        </form>
-        <input ref={inputRef} hidden type="file" accept="application/pdf" onChange={onFileInput} />
-      </div>
-    </div>
+    <>
+      <input ref={inputRef} hidden type="file" accept="application/pdf" onChange={onFileInput} />
+      {error ? (
+        <p className={pdfError} role="alert">
+          {error}
+        </p>
+      ) : null}
+    </>
   );
 }

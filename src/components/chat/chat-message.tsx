@@ -16,18 +16,16 @@ const message = css({
 });
 
 const messageLabel = css({
-  color: "inkSoft",
+  color: "muted",
   fontFamily: "mono",
-  fontSize: "9px",
-  letterSpacing: "0.08em",
-  textTransform: "uppercase",
+  fontSize: "12px",
 });
 
 const messageBubble = css({
   maxWidth: "88%",
-  borderRadius: "bubble",
-  padding: "11px 14px",
-  fontSize: "13px",
+  borderRadius: "control",
+  padding: "10px 12px",
+  fontSize: "14px",
   lineHeight: "1.7",
   whiteSpace: "pre-wrap",
   smDown: {
@@ -36,15 +34,15 @@ const messageBubble = css({
 });
 
 const messageBubbleUser = css({
-  background: "sageDark",
-  color: "white",
+  background: "primarySoft",
+  color: "fg",
 });
 
 const messageBubbleAssistant = css({
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "line",
-  background: "white",
+  background: "surface",
 });
 
 type ChatMessageProps = {
@@ -54,7 +52,7 @@ type ChatMessageProps = {
 export function ChatMessage({ role }: ChatMessageProps) {
   return (
     <MessagePrimitive.Root className={message} data-role={role}>
-      <span className={messageLabel}>{role === "user" ? "You" : "OpenCode"}</span>
+      <span className={messageLabel}>{role === "user" ? "あなた" : "OpenCode"}</span>
       <div
         className={cx(
           messageBubble,

@@ -1,14 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
-import {
-  AssistantRuntimeProvider,
-  type ChatModelAdapter,
-  useLocalRuntime,
-} from "@assistant-ui/react";
+import { useRef } from "react";
+import { AssistantRuntimeProvider, useLocalRuntime } from "@assistant-ui/react";
+import type { ChatModelAdapter } from "@assistant-ui/react";
 import { acpClient, createPrompt, textFromMessage } from "../../lib/acp";
 import { css } from "../../../styled-system/css";
-import { ChatHeader } from "./chat-header";
 import { ChatThread } from "./chat-thread";
 
 const chatThread = css({
@@ -18,14 +14,17 @@ const chatThread = css({
 
 type ChatPanelProps = {
   selectedText: string;
+  bridgeError: string | null;
   onAskFocus?: (() => void) | undefined;
   askFocusToken?: number | undefined;
 };
 
-export function ChatPanel({ selectedText, onAskFocus, askFocusToken }: ChatPanelProps) {
-  // Render-time resource: AcpClient returns one shared promise across Suspense remounts.
-  const sessionPromise = acpClient.getSessionResource();
-  const [bridgeError, setBridgeError] = useState<string | null>(null);
+export function ChatPanel({
+  selectedText,
+  bridgeError,
+  onAskFocus,
+  askFocusToken,
+}: ChatPanelProps) {
   const selectedTextRef = useRef(selectedText);
   selectedTextRef.current = selectedText;
 
@@ -33,7 +32,6 @@ export function ChatPanel({ selectedText, onAskFocus, askFocusToken }: ChatPanel
   if (!adapterRef.current) {
     adapterRef.current = {
       async *run({ messages, abortSignal }) {
-        // Only the latest user turn is sent; selection is snapshotted at send time.
         const latestUserMessage = [...messages]
           .toReversed()
           .find((message) => message.role === "user");
@@ -54,18 +52,15 @@ export function ChatPanel({ selectedText, onAskFocus, askFocusToken }: ChatPanel
   const runtime = useLocalRuntime(adapterRef.current as ChatModelAdapter);
 
   return (
-    <>
-      <ChatHeader sessionPromise={sessionPromise} onBridgeError={setBridgeError} />
-      <div className={chatThread}>
-        <AssistantRuntimeProvider runtime={runtime}>
-          <ChatThread
-            selectedText={selectedText}
-            bridgeError={bridgeError}
-            onAskFocus={onAskFocus}
-            askFocusToken={askFocusToken}
-          />
-        </AssistantRuntimeProvider>
-      </div>
-    </>
+    <div className={chatThread}>
+      <AssistantRuntimeProvider runtime={runtime}>
+        <ChatThread
+          selectedText={selectedText}
+          bridgeError={bridgeError}
+          onAskFocus={onAskFocus}
+          askFocusToken={askFocusToken}
+        />
+      </AssistantRuntimeProvider>
+    </div>
   );
 }

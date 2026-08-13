@@ -10,10 +10,9 @@ const mobileSwitch = css({
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "line",
-  borderRadius: "pill",
-  background: "glass",
+  borderRadius: "control",
+  background: "surface",
   padding: "3px",
-  backdropFilter: "blur(8px)",
   mdDown: {
     display: "inline-flex",
   },
@@ -22,16 +21,16 @@ const mobileSwitch = css({
 const mobileSwitchButton = css({
   position: "relative",
   border: "0",
-  borderRadius: "pill",
+  borderRadius: "control",
   background: "transparent",
-  color: "inkSoft",
-  padding: "8px 14px",
-  fontSize: "12px",
+  color: "muted",
+  padding: "8px 12px",
+  fontSize: "14px",
   fontWeight: "600",
   transition: "background 160ms ease, color 160ms ease",
   "&[data-active=true]": {
-    background: "sageDark",
-    color: "white",
+    background: "primary",
+    color: "surface",
   },
   _motionReduce: {
     transition: "none",
@@ -45,7 +44,7 @@ const mobileSwitchDot = css({
   width: "6px",
   height: "6px",
   borderRadius: "50%",
-  background: "gold",
+  background: "secondary",
 });
 
 type MobilePane = "read" | "ask";
@@ -64,7 +63,7 @@ export function MobilePaneSwitcher({
   onAsk,
 }: MobilePaneSwitcherProps) {
   return (
-    <form className={mobileSwitch} role="tablist" aria-label="Reading layout">
+    <form className={mobileSwitch} role="tablist" aria-label="画面の切替">
       <button
         type="submit"
         role="tab"
@@ -73,7 +72,7 @@ export function MobilePaneSwitcher({
         className={mobileSwitchButton}
         data-active={mobilePane === "read"}
       >
-        Read
+        読む
       </button>
       <button
         type="submit"
@@ -83,7 +82,7 @@ export function MobilePaneSwitcher({
         className={mobileSwitchButton}
         data-active={mobilePane === "ask"}
       >
-        Ask
+        聞く
         {hasSelection ? <span className={mobileSwitchDot} aria-hidden /> : null}
       </button>
     </form>

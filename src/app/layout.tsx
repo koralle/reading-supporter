@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 
@@ -13,6 +13,10 @@ const notoSansJP = localFont({
 export const metadata: Metadata = {
   title: "Reading Supporter",
   description: "Ask questions about the page you are reading.",
+};
+
+export const viewport: Viewport = {
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

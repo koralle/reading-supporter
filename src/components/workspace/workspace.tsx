@@ -4,71 +4,71 @@ import { useState, useTransition } from "react";
 import { cx, css } from "../../../styled-system/css";
 import { ChatPanel } from "../chat/chat-panel";
 import { PdfReader } from "../pdf/pdf-reader";
+import { idlePdfChrome } from "../pdf/pdf-open-bridge";
+import type { PdfChrome } from "../pdf/pdf-open-bridge";
 import { WorkspaceHeader } from "./workspace-header";
 import type { MobilePane } from "./mobile-pane-switcher";
 
 const workspace = css({
   height: "100vh",
   minHeight: "100vh",
+  display: "grid",
+  gridTemplateRows: "56px minmax(0, 1fr)",
+  gridTemplateAreas: `"header" "desk"`,
+  overflow: "hidden",
+  background: "surface",
   "@supports (height: 100dvh)": {
     height: "100dvh",
     minHeight: "100dvh",
   },
-  padding: "12px",
-  display: "grid",
-  gridTemplateRows: "auto 1fr",
-  gap: "10px",
-  overflow: "hidden",
-  mdDown: {
-    padding: "8px",
-    gap: "8px",
-  },
-  smDown: {
-    padding: "8px",
-  },
+});
+
+const headerArea = css({
+  gridArea: "header",
 });
 
 const desk = css({
+  gridArea: "desk",
   minHeight: "0",
+  minInlineSize: "0",
   display: "grid",
-  gridTemplateColumns: "minmax(0, 1.18fr) minmax(340px, 0.82fr)",
-  gap: "10px",
+  gridTemplateColumns: "minmax(0, 1.15fr) minmax(420px, 0.85fr)",
   mdDown: {
     gridTemplateColumns: "1fr",
     gridTemplateRows: "1fr",
-    minHeight: "0",
   },
 });
 
-const panel = css({
+const deskChatCollapsed = css({
+  gridTemplateColumns: "minmax(0, 1fr)",
+});
+
+const column = css({
   minHeight: "0",
+  minInlineSize: "0",
   overflow: "hidden",
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: "line",
-  borderRadius: "panelCompact",
-  background: "white",
-  boxShadow: "panel",
-  smDown: {
-    borderRadius: "10px",
+  background: "surface",
+});
+
+const readerColumn = css({
+  display: "grid",
+  gridTemplateRows: "minmax(0, 1fr)",
+  borderRightWidth: "1px",
+  borderRightStyle: "solid",
+  borderRightColor: "line",
+  mdDown: {
+    borderRightWidth: "0",
   },
 });
 
-const readerPanel = css({
+const chatColumn = css({
   display: "grid",
-  gridTemplateRows: "auto 1fr",
-});
-
-const chatPanel = css({
-  minHeight: "0",
-  display: "grid",
-  gridTemplateRows: "auto 1fr",
-  background: "chatBg",
+  gridTemplateRows: "minmax(0, 1fr)",
 });
 
 const activeMobilePane = css({
   mdDown: {
-    minHeight: "calc(100dvh - 92px)",
+    minHeight: "calc(100dvh - 56px)",
   },
 });
 
@@ -78,10 +78,19 @@ const hideBelowMd = css({
   },
 });
 
-export default function Workspace() {
+const hideChatDesktop = css({
+  md: {
+    display: "none",
+  },
+});
+
+function useWorkspaceState() {
   const [selectedText, setSelectedText] = useState("");
   const [mobilePane, setMobilePane] = useState<MobilePane>("read");
+  const [chatOpen, setChatOpen] = useState(true);
   const [askFocusToken, setAskFocusToken] = useState(0);
+  const [bridgeError, setBridgeError] = useState<string | null>(null);
+  const [pdfChrome, setPdfChrome] = useState<PdfChrome>(idlePdfChrome);
   const [, startTransition] = useTransition();
 
   const readAction = () => {
@@ -90,11 +99,13 @@ export default function Workspace() {
 
   const askAction = () => {
     setMobilePane("ask");
+    setChatOpen(true);
   };
 
   const focusAsk = () => {
     startTransition(() => {
       setMobilePane("ask");
+      setChatOpen(true);
     });
   };
 
@@ -103,38 +114,87 @@ export default function Workspace() {
     setAskFocusToken((token) => token + 1);
   };
 
+  return {
+    selectedText,
+    setSelectedText,
+    mobilePane,
+    chatOpen,
+    setChatOpen,
+    askFocusToken,
+    bridgeError,
+    setBridgeError,
+    pdfChrome,
+    setPdfChrome,
+    readAction,
+    askAction,
+    focusAsk,
+    askAboutSelection,
+  };
+}
+
+export default function Workspace() {
+  const {
+    selectedText,
+    setSelectedText,
+    mobilePane,
+    chatOpen,
+    setChatOpen,
+    askFocusToken,
+    bridgeError,
+    setBridgeError,
+    pdfChrome,
+    setPdfChrome,
+    readAction,
+    askAction,
+    focusAsk,
+    askAboutSelection,
+  } = useWorkspaceState();
+
   return (
     <main className={workspace}>
-      <WorkspaceHeader
-        mobilePane={mobilePane}
-        hasSelection={Boolean(selectedText.trim())}
-        onRead={readAction}
-        onAsk={askAction}
-      />
+      <div className={headerArea}>
+        <WorkspaceHeader
+          documentName={pdfChrome.documentName}
+          openPdf={pdfChrome.openPdf}
+          chatOpen={chatOpen}
+          mobilePane={mobilePane}
+          hasSelection={Boolean(selectedText.trim())}
+          onToggleChat={() => setChatOpen((open) => !open)}
+          onRead={readAction}
+          onAsk={askAction}
+          onBridgeError={setBridgeError}
+        />
+      </div>
 
-      <div className={desk}>
+      <div className={cx(desk, !chatOpen && deskChatCollapsed)}>
         <section
           className={cx(
-            panel,
-            readerPanel,
+            column,
+            readerColumn,
             mobilePane === "read" && activeMobilePane,
             mobilePane === "ask" && hideBelowMd,
           )}
           aria-label="PDF reader"
         >
-          <PdfReader onSelectionChange={setSelectedText} onAskSelection={askAboutSelection} />
+          <PdfReader
+            onSelectionChange={setSelectedText}
+            onAskSelection={askAboutSelection}
+            onChromeChange={setPdfChrome}
+          />
         </section>
         <section
           className={cx(
-            panel,
-            chatPanel,
+            column,
+            chatColumn,
             mobilePane === "ask" && activeMobilePane,
             mobilePane === "read" && hideBelowMd,
+            !chatOpen && hideChatDesktop,
           )}
-          aria-label="Chat with your book"
+          aria-label="チャット"
         >
           <ChatPanel
             selectedText={selectedText}
+            bridgeError={bridgeError}
             onAskFocus={focusAsk}
             askFocusToken={askFocusToken}
           />

@@ -11,27 +11,25 @@ const STORAGE_KEY = "reading-supporter:chat-submit-mode";
 
 const composer = css({
   display: "grid",
-  gridTemplateColumns: "1fr auto",
-  alignItems: "end",
+  gridTemplateColumns: "1fr",
   gap: "8px",
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "lineStrong",
-  borderRadius: "composer",
-  background: "white",
-  padding: "7px",
-  boxShadow: "composer",
+  borderColor: "line",
+  borderRadius: "control",
+  background: "surface",
+  padding: "8px",
   "& textarea": {
     width: "100%",
-    minHeight: "42px",
-    maxHeight: "130px",
+    minHeight: "72px",
+    maxHeight: "160px",
     resize: "vertical",
     border: "0",
     outline: "0",
     background: "transparent",
-    padding: "10px 9px",
-    color: "ink",
-    fontSize: "12px",
+    padding: "8px",
+    color: "fg",
+    fontSize: "14px",
   },
   "& textarea::placeholder": {
     color: "placeholder",
@@ -45,18 +43,16 @@ const selectedContext = css({
   gap: "8px",
   borderLeftWidth: "2px",
   borderLeftStyle: "solid",
-  borderLeftColor: "sage",
+  borderLeftColor: "primary",
   padding: "4px 8px",
-  color: "inkSoft",
-  fontSize: "10px",
+  color: "muted",
+  fontSize: "12px",
   lineHeight: "1.5",
   "& strong": {
-    color: "sageDark",
+    color: "primary",
     fontFamily: "mono",
-    fontSize: "9px",
-    fontWeight: "500",
-    letterSpacing: "0.04em",
-    textTransform: "uppercase",
+    fontSize: "12px",
+    fontWeight: "600",
     whiteSpace: "nowrap",
   },
 });
@@ -64,28 +60,27 @@ const selectedContext = css({
 const actions = css({
   display: "flex",
   alignItems: "center",
-  gap: "6px",
+  justifyContent: "flex-end",
+  gap: "8px",
 });
 
 const modeToggle = css({
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "line",
-  borderRadius: "pill",
+  borderRadius: "control",
   background: "transparent",
-  color: "inkSoft",
+  color: "muted",
   fontFamily: "mono",
-  fontSize: "10px",
+  fontSize: "12px",
   fontWeight: "600",
-  letterSpacing: "0.02em",
-  minHeight: "38px",
+  minHeight: "36px",
   padding: "6px 10px",
   whiteSpace: "nowrap",
   transition: "background 160ms ease, color 160ms ease, border-color 160ms ease",
   _hover: {
-    borderColor: "lineStrong",
-    color: "ink",
-    background: "paper",
+    color: "fg",
+    background: "stage",
   },
   _motionReduce: {
     transition: "none",
@@ -94,32 +89,26 @@ const modeToggle = css({
 
 const sendButton = css({
   border: "0",
-  borderRadius: "pill",
-  background: "sageDark",
-  color: "white",
-  fontSize: "12px",
-  fontWeight: "700",
-  minWidth: "66px",
-  minHeight: "38px",
+  borderRadius: "control",
+  background: "primary",
+  color: "surface",
+  fontSize: "14px",
+  fontWeight: "600",
+  minWidth: "64px",
+  minHeight: "36px",
   padding: "8px 12px",
-  transition: "background 160ms ease, transform 160ms ease",
+  transition: "background 160ms ease",
   _disabled: {
     cursor: "not-allowed",
     opacity: "0.45",
   },
   _hover: {
     _enabled: {
-      background: "sageHover",
-      transform: "translateY(-1px)",
+      background: "primaryHover",
     },
   },
   _motionReduce: {
     transition: "none",
-    _hover: {
-      _enabled: {
-        transform: "none",
-      },
-    },
   },
 });
 
@@ -163,12 +152,12 @@ function formatSubmitHint(
   isApple: boolean | undefined,
 ): string {
   if (keys && keys.length > 0) {
-    return `${keys.join(" + ")} 送信`;
+    return `${keys.join(" + ")} で送信`;
   }
   if (mode === "enter") {
-    return "⏎ 送信";
+    return "⏎ で送信";
   }
-  return `${modKeyLabel(isApple)} + ⏎ 送信`;
+  return `${modKeyLabel(isApple)} + ⏎ で送信`;
 }
 
 function describeMode(mode: SubmitMode, isApple: boolean | undefined): string {
@@ -271,7 +260,7 @@ export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: Ch
     <ComposerPrimitive.Root className={composer} onFocusCapture={onAskFocus}>
       {selectedText.trim() ? (
         <div className={selectedContext}>
-          <strong>Context</strong>
+          <strong>選択中</strong>
           <span>
             {selectedText.replace(/\s+/g, " ").slice(0, 150)}
             {selectedText.length > 150 ? "..." : ""}
@@ -281,7 +270,7 @@ export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: Ch
       <ComposerPrimitive.Input
         ref={textareaRef}
         onKeyDown={onKeyDown}
-        placeholder="Ask about this book..."
+        placeholder="質問を入力..."
         submitMode="none"
       />
       <div className={actions}>
@@ -295,7 +284,7 @@ export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: Ch
         >
           {submitHint}
         </button>
-        <ComposerPrimitive.Send className={sendButton}>Send</ComposerPrimitive.Send>
+        <ComposerPrimitive.Send className={sendButton}>送信</ComposerPrimitive.Send>
       </div>
     </ComposerPrimitive.Root>
   );
