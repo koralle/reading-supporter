@@ -6,6 +6,7 @@ import { ComposerPrimitive } from "@assistant-ui/react";
 import { getUserAgentSummary, useChatSubmit } from "use-chat-submit";
 import type { SubmitMode } from "use-chat-submit";
 import { css } from "../../../styled-system/css";
+import { tapTarget, visuallyHidden } from "../../styles/visually-hidden";
 
 const STORAGE_KEY = "reading-supporter:chat-submit-mode";
 
@@ -15,7 +16,7 @@ const composer = css({
   gap: "8px",
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "line",
+  borderColor: "lineStrong",
   borderRadius: "control",
   background: "surface",
   padding: "8px",
@@ -23,13 +24,13 @@ const composer = css({
     width: "100%",
     minHeight: "72px",
     maxHeight: "160px",
-    resize: "vertical",
+    resize: "block",
     border: "0",
     outline: "0",
     background: "transparent",
     padding: "8px",
     color: "fg",
-    fontSize: "14px",
+    fontSize: "1rem",
   },
   "& textarea::placeholder": {
     color: "placeholder",
@@ -49,7 +50,7 @@ const selectedContext = css({
   fontSize: "12px",
   lineHeight: "1.5",
   "& strong": {
-    color: "primary",
+    color: "primaryText",
     fontFamily: "mono",
     fontSize: "12px",
     fontWeight: "600",
@@ -65,17 +66,17 @@ const actions = css({
 });
 
 const modeToggle = css({
+  ...tapTarget,
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "line",
+  borderColor: "lineStrong",
   borderRadius: "control",
   background: "transparent",
   color: "muted",
   fontFamily: "mono",
-  fontSize: "12px",
+  fontSize: "0.75rem",
   fontWeight: "600",
-  minHeight: "36px",
-  padding: "6px 10px",
+  paddingInline: "10px",
   whiteSpace: "nowrap",
   transition: "background 160ms ease, color 160ms ease, border-color 160ms ease",
   _hover: {
@@ -88,15 +89,15 @@ const modeToggle = css({
 });
 
 const sendButton = css({
+  ...tapTarget,
   border: "0",
   borderRadius: "control",
   background: "primary",
-  color: "surface",
-  fontSize: "14px",
+  color: "onPrimary",
+  fontSize: "0.875rem",
   fontWeight: "600",
-  minWidth: "64px",
-  minHeight: "36px",
-  padding: "8px 12px",
+  minInlineSize: "64px",
+  paddingInline: "12px",
   transition: "background 160ms ease",
   _disabled: {
     cursor: "not-allowed",
@@ -267,7 +268,11 @@ export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: Ch
           </span>
         </div>
       ) : null}
+      <label className={visuallyHidden} htmlFor="chat-composer-input">
+        質問
+      </label>
       <ComposerPrimitive.Input
+        id="chat-composer-input"
         ref={textareaRef}
         onKeyDown={onKeyDown}
         placeholder="質問を入力..."

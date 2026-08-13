@@ -8,6 +8,7 @@ import {
 import { open } from "@tauri-apps/plugin-dialog";
 import { isTauriRuntime, readSelectedPdf } from "../../lib/tauri";
 import { css } from "../../../styled-system/css";
+import { visuallyHidden } from "../../styles/visually-hidden";
 
 const pdfError = css({
   margin: "16px",
@@ -99,7 +100,14 @@ export function PdfOpenBridge({ onChromeChange }: PdfOpenBridgeProps) {
 
   return (
     <>
-      <input ref={inputRef} hidden type="file" accept="application/pdf" onChange={onFileInput} />
+      <input
+        ref={inputRef}
+        className={visuallyHidden}
+        type="file"
+        accept="application/pdf"
+        aria-label="PDFを開く"
+        onChange={onFileInput}
+      />
       {error ? (
         <p className={pdfError} role="alert">
           {error}

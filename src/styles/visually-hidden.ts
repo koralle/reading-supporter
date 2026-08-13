@@ -12,3 +12,11 @@ export const visuallyHidden = css({
   padding: "0",
   margin: "-1px",
 });
+
+/** WCAG 2.5.8 floor, bumped on coarse pointers (`forms` / `css` touch targets). */
+export const tapTarget = {
+  minBlockSize: "44px",
+  "@media (pointer: coarse)": {
+    minBlockSize: "48px",
+  },
+} as const;

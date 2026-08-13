@@ -28,7 +28,8 @@ export default defineConfig({
           surface: { value: "light-dark(#FFFFFF, #111827)" },
           fg: { value: "light-dark(#111827, #F9FAFB)" },
           muted: { value: "light-dark(#4B5563, #D1D5DB)" },
-          line: { value: "light-dark(#737B88, #9CA3AF)" },
+          line: { value: "light-dark(#E5E7EB, #374151)" },
+          lineStrong: { value: "light-dark(#8A9099, #9CA3AF)" },
           stage: { value: "light-dark(#F3F4F6, #1F2937)" },
           highlight: { value: "light-dark(#CA8A04, #FDE047)" },
           placeholder: { value: "light-dark(#4B5563, #9CA3AF)" },
@@ -43,8 +44,7 @@ export default defineConfig({
         },
         shadows: {
           menu: {
-            value:
-              "light-dark(0 8px 24px rgba(17, 24, 39, 0.12), 0 8px 24px rgba(0, 0, 0, 0.45))",
+            value: "light-dark(0 8px 24px rgba(17, 24, 39, 0.12), 0 8px 24px rgba(0, 0, 0, 0.45))",
           },
         },
         radii: {

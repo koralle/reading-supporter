@@ -2,15 +2,16 @@
 
 import { useFormStatus } from "react-dom";
 import { css } from "../../../styled-system/css";
+import { tapTarget } from "../../styles/visually-hidden";
 
 const openButton = css({
+  ...tapTarget,
   border: "0",
   borderRadius: "control",
   background: "primary",
-  color: "surface",
-  fontSize: "14px",
+  color: "onPrimary",
+  fontSize: "0.875rem",
   fontWeight: "600",
-  minHeight: "36px",
   paddingInline: "12px",
   transition: "background 160ms ease",
   _disabled: {
@@ -29,13 +30,15 @@ const openButton = css({
 
 type OpenPdfSubmitProps = {
   disabled?: boolean | undefined;
+  id?: string | undefined;
 };
 
-export function OpenPdfSubmit({ disabled = false }: OpenPdfSubmitProps) {
+export function OpenPdfSubmit({ disabled = false, id }: OpenPdfSubmitProps) {
   const { pending } = useFormStatus();
   const isDisabled = disabled || pending;
   return (
     <button
+      id={id}
       className={openButton}
       type={disabled ? "button" : "submit"}
       disabled={isDisabled}

@@ -20,8 +20,8 @@ const welcomeBody = css({
 
 const selectionReady = css({
   marginTop: "8px",
-  color: "primary",
-  fontSize: "14px",
+  color: "primaryText",
+  fontSize: "0.875rem",
   fontWeight: "600",
 });
 
@@ -45,7 +45,11 @@ export function ChatWelcome({ selectedText, bridgeError }: ChatWelcomeProps) {
         {selectedText.trim() ? (
           <p className={selectionReady}>選択した箇所について、下から質問できます。</p>
         ) : null}
-        {bridgeError ? <p className={bridgeErrorStyle}>{bridgeError}</p> : null}
+        {bridgeError ? (
+          <p className={bridgeErrorStyle} role="alert">
+            {bridgeError}
+          </p>
+        ) : null}
       </div>
     </ThreadPrimitive.Empty>
   );

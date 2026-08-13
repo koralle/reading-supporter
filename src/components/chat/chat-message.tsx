@@ -52,7 +52,9 @@ type ChatMessageProps = {
 export function ChatMessage({ role }: ChatMessageProps) {
   return (
     <MessagePrimitive.Root className={message} data-role={role}>
-      <span className={messageLabel}>{role === "user" ? "あなた" : "OpenCode"}</span>
+      <span className={messageLabel}>
+        {role === "user" ? "あなた" : <span lang="en">OpenCode</span>}
+      </span>
       <div
         className={cx(
           messageBubble,

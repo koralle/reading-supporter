@@ -16,7 +16,8 @@ const threadViewport = css({
   overflowY: "auto",
   overscrollBehavior: "contain",
   padding: "16px",
-  scrollbarColor: "{colors.scrollbar} transparent",
+  scrollbarColor: "{colors.scrollbarThumb} {colors.scrollbarTrack}",
+  scrollbarWidth: "thin",
   smDown: {
     paddingInline: "12px",
   },

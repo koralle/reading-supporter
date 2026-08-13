@@ -51,6 +51,8 @@ const column = css({
 });
 
 const readerColumn = css({
+  containerType: "inline-size",
+  containerName: "reader",
   display: "grid",
   gridTemplateRows: "minmax(0, 1fr)",
   borderRightWidth: "1px",
@@ -174,7 +176,7 @@ export default function Workspace() {
             mobilePane === "read" && activeMobilePane,
             mobilePane === "ask" && hideBelowMd,
           )}
-          aria-label="PDF reader"
+          aria-label="PDFリーダー"
         >
           <PdfReader
             onSelectionChange={setSelectedText}

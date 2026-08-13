@@ -32,8 +32,15 @@ export const globalCss = defineGlobalStyles({
     scrollbarGutter: "stable",
     // タップハイライト（iOS）を抑える。
     WebkitTapHighlightColor: "transparent",
-    // ライト単一テーマなので UA UI（スクロールバー等）もライトに固定。
-    colorScheme: "light",
+    colorScheme: "light dark",
+    fontSizeAdjust: "from-font",
+    scrollbarColor: "{colors.scrollbarThumb} {colors.scrollbarTrack}",
+    scrollbarWidth: "thin",
+  },
+  "@media (prefers-contrast: more)": {
+    ":where(:root)": {
+      scrollbarColor: "CanvasText Canvas",
+    },
   },
   ":where(body)": {
     // スティッキーフッター対策の最低高。動的ビューポートのブロック方向。
@@ -95,6 +102,10 @@ export const globalCss = defineGlobalStyles({
     textAutospace: "no-autospace",
   },
   "@media (forced-colors: active)": {
+    ":where(body)": {
+      backgroundColor: "Canvas",
+      color: "CanvasText",
+    },
     ":where(mark)": {
       backgroundColor: "Highlight",
       color: "HighlightText",
@@ -183,7 +194,7 @@ export const globalCss = defineGlobalStyles({
     // 未スタイルでも可読性を保つための既定ボーダー。
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: "unset",
+    borderColor: "line",
     borderRadius: "unset",
     color: "unset",
     font: "unset",
@@ -297,11 +308,12 @@ export const globalCss = defineGlobalStyles({
     // 無効要素は非インタラクティブ状態を反映して既定カーソル。
     cursor: "default",
   },
-  ':where(button, [role="tab" i], [role="button" i], [role="option" i]):active:not(:disabled, [aria-disabled="true" i])':
-    {
-      // タップハイライトを透明化した代わりに、押下時は下に沈むフィードバックを付ける。
-      transform: "translateY(1px)",
-    },
+  "@media (prefers-reduced-motion: no-preference)": {
+    ':where(button, [role="tab" i], [role="button" i], [role="option" i]):active:not(:disabled, [aria-disabled="true" i])':
+      {
+        transform: "translateY(1px)",
+      },
+  },
   '[hidden]:not([hidden="until-found" i])': {
     // 非表示意図の要素が表示されないことを保証。
     display: "none!",

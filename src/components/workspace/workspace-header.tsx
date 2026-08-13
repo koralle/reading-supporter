@@ -1,6 +1,7 @@
 "use client";
 
 import { css } from "../../../styled-system/css";
+import { tapTarget } from "../../styles/visually-hidden";
 import { acpClient } from "../../lib/acp";
 import { AcpStatus } from "../chat/acp-connection-status";
 import { OpenPdfSubmit } from "../pdf/open-pdf-submit";
@@ -35,13 +36,17 @@ const brand = css({
 });
 
 const brandName = css({
+  margin: "0",
   flexShrink: "0",
   color: "fg",
+  fontSize: "1rem",
+  fontWeight: "600",
+  lineHeight: "1.2",
 });
 
 const crumbSep = css({
   flexShrink: "0",
-  color: "line",
+  color: "muted",
 });
 
 const crumbName = css({
@@ -63,16 +68,16 @@ const actions = css({
 });
 
 const ghostButton = css({
+  ...tapTarget,
   display: "none",
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "line",
+  borderColor: "lineStrong",
   borderRadius: "control",
   background: "surface",
   color: "fg",
-  fontSize: "14px",
+  fontSize: "0.875rem",
   fontWeight: "600",
-  minHeight: "36px",
   paddingInline: "12px",
   md: {
     display: "inline-flex",
@@ -111,7 +116,9 @@ export function WorkspaceHeader({
   return (
     <header className={appHeader}>
       <div className={brand}>
-        <span className={brandName}>Reading Supporter</span>
+        <h1 className={brandName}>
+          <span lang="en">Reading Supporter</span>
+        </h1>
         <span className={crumbSep} aria-hidden>
           /
         </span>

@@ -65,7 +65,7 @@ export function PdfDocumentView({ documentId, onAskSelection }: PdfDocumentViewP
                     <SelectionLayer
                       documentId={documentId}
                       pageIndex={pageIndex}
-                      background="rgba(254, 240, 138, 0.85)"
+                      background="color-mix(in oklab, var(--colors-highlight) 85%, transparent)"
                       selectionMenu={(props) => (
                         <SelectionMenu
                           {...props}

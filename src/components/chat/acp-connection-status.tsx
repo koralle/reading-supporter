@@ -3,6 +3,7 @@
 import { Suspense, use } from "react";
 import { ErrorBoundary, getErrorMessage } from "react-error-boundary";
 import { css } from "../../../styled-system/css";
+import { visuallyHidden } from "../../styles/visually-hidden";
 
 const connectionStatus = css({
   display: "flex",
@@ -10,7 +11,8 @@ const connectionStatus = css({
   gap: "8px",
   color: "muted",
   fontFamily: "mono",
-  fontSize: "12px",
+  fontSize: "0.75rem",
+  fontSizeAdjust: "from-font",
   _before: {
     width: "6px",
     height: "6px",
@@ -18,10 +20,13 @@ const connectionStatus = css({
     background: "muted",
     content: '""',
   },
-  "&[data-connected=true]::before": {
+  "&[data-status=ready]::before": {
     background: "success",
   },
-  "&[data-connected=false]::before": {
+  "&[data-status=pending]::before": {
+    background: "muted",
+  },
+  "&[data-status=error]::before": {
     background: "danger",
   },
 });
@@ -33,7 +38,7 @@ type AcpConnectionStatusProps = {
 function AcpConnectionReady({ sessionPromise }: AcpConnectionStatusProps) {
   use(sessionPromise);
   return (
-    <span className={connectionStatus} data-connected="true">
+    <span className={connectionStatus} data-status="ready">
       接続済
     </span>
   );
@@ -50,19 +55,19 @@ export function AcpStatus({ sessionPromise, onBridgeError }: AcpStatusProps) {
       onError={(error) => {
         onBridgeError?.(getErrorMessage(error) ?? String(error));
       }}
-      fallbackRender={({ error }) => (
-        <span
-          className={connectionStatus}
-          data-connected="false"
-          title={getErrorMessage(error) ?? String(error)}
-        >
-          未接続
-        </span>
-      )}
+      fallbackRender={({ error }) => {
+        const message = getErrorMessage(error) ?? String(error);
+        return (
+          <span className={connectionStatus} data-status="error">
+            未接続
+            <span className={visuallyHidden}>{message}</span>
+          </span>
+        );
+      }}
     >
       <Suspense
         fallback={
-          <span className={connectionStatus} data-connected="false">
+          <span className={connectionStatus} data-status="pending">
             接続中
           </span>
         }
