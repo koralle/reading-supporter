@@ -12,7 +12,7 @@ const message = css({
     alignItems: "flex-end",
   },
   "&[data-role=assistant]": {
-    alignItems: "flex-start",
+    alignItems: "stretch",
   },
 });
 
@@ -23,23 +23,25 @@ const messageLabel = css({
 });
 
 const messageBubble = css({
-  maxWidth: "88%",
+  minInlineSize: "0",
   borderRadius: "control",
   padding: "10px 12px",
   fontSize: "14px",
   lineHeight: "1.7",
-  smDown: {
-    maxWidth: "94%",
-  },
 });
 
 const messageBubbleUser = css({
+  maxInlineSize: "88%",
   background: "primarySoft",
   color: "fg",
   whiteSpace: "pre-wrap",
+  smDown: {
+    maxInlineSize: "94%",
+  },
 });
 
 const messageBubbleAssistant = css({
+  inlineSize: "100%",
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "line",

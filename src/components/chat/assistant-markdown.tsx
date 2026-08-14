@@ -9,10 +9,47 @@ import { css } from "../../../styled-system/css";
 const streamdownPlugins = { code, mermaid, cjk };
 
 const markdown = css({
-  minWidth: "0",
-  overflowX: "auto",
+  minInlineSize: "0",
+  inlineSize: "100%",
+  overflow: "visible",
   color: "fg",
   fontFamily: "body",
+  "& [data-streamdown=mermaid-block]": {
+    inlineSize: "100%",
+    maxInlineSize: "100%",
+    blockSize: "auto",
+  },
+  /*
+   * Streamdown's pan-zoom shell uses min-h-28, flex-1, and overflow-hidden,
+   * which clips diagrams. Size the shell to the SVG instead.
+   */
+  "& [data-streamdown=mermaid]": {
+    display: "block",
+    blockSize: "auto!",
+    minBlockSize: "0!",
+    overflow: "visible!",
+  },
+  "& [data-streamdown=mermaid] > div": {
+    display: "block!",
+    blockSize: "auto!",
+    minBlockSize: "0!",
+    overflow: "visible!",
+  },
+  "& [data-streamdown=mermaid] [role=application]": {
+    flex: "none!",
+    blockSize: "auto!",
+  },
+  "& [data-streamdown=mermaid] [aria-label='Mermaid chart']": {
+    display: "block",
+    blockSize: "auto",
+  },
+  "& [data-streamdown=mermaid] svg": {
+    display: "block",
+    inlineSize: "100%",
+    maxInlineSize: "100%",
+    blockSize: "auto!",
+    height: "auto!",
+  },
   "& :is(h1, h2, h3, h4, h5, h6):first-child": {
     marginTop: "0!",
   },
