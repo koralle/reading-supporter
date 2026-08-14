@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>PDFオープン · Tauri単一路線</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #f5f5f5;
+      --color-ink:     #2d3142;
+      --color-muted:   #4f5d75;
+      --color-accent:  #eb6c36;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1280px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .lede {
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: var(--color-muted);
+      max-width: 52rem;
+      margin-bottom: 1.5rem;
+    }
+
+    figure { margin: 0; }
+    svg { width: 100%; min-width: 960px; display: block; }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <header>
+      <p class="eyebrow">Sequence · Tauri desktop only</p>
+      <h1>PDFオープンは単一路線</h1>
+      <p class="lede">ブラウザ用の hidden file input、OPT 分岐、INPUT.CLICK、File.arrayBuffer() はない。native dialog.open → read_pdf IPC → Vec&lt;u8&gt; → ArrayBuffer → openDocumentBuffer で EmbedPDF に渡す。</p>
+    </header>
+
+    <figure>
+    <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pdf-open-flow-tauri-only-title pdf-open-flow-tauri-only-desc">
+      <title id="pdf-open-flow-tauri-only-title">PDFオープンは単一路線</title>
+      <desc id="pdf-open-flow-tauri-only-desc">ヘッダーの openPdf から Tauri の dialog.open、read_pdf IPC、Vec of u8、ArrayBuffer、openDocumentBuffer を経て EmbedPDF が表示するまでの単一シーケンス。ブラウザの file input 分岐はない。</desc>
+      <defs>
+        <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.9" fill="rgba(45,49,66,0.10)"/>
+        </pattern>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/>
+        </marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/>
+        </marker>
+        <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/>
+        </marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#f5f5f5"/>
+      <rect width="100%" height="100%" fill="url(#dots)" opacity="0.55"/>
+
+      <!-- Callout: browser path removed -->
+      <text x="1240" y="36" fill="#4f5d75" font-size="14" font-style="italic"
+            font-family="'Instrument Serif', serif" text-anchor="end">no hidden file input</text>
+      <path d="M 1160 44 Q 920 56 720 68" fill="none"
+            stroke="rgba(45,49,66,0.30)" stroke-width="1" stroke-dasharray="4,3"/>
+      <circle cx="720" cy="68" r="2" fill="#4f5d75"/>
+
+      <!-- Lifelines: Header 120 · Bridge 380 · Dialog 640 · Tauri 900 · EmbedPDF 1160 -->
+      <line x1="120" y1="128" x2="120" y2="600" stroke="rgba(45,49,66,0.22)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="380" y1="128" x2="380" y2="600" stroke="rgba(45,49,66,0.22)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="640" y1="128" x2="640" y2="600" stroke="rgba(45,49,66,0.22)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="900" y1="128" x2="900" y2="600" stroke="rgba(45,49,66,0.22)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="1160" y1="128" x2="1160" y2="600" stroke="rgba(45,49,66,0.22)" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- Activation bars -->
+      <rect x="376" y="180" width="8" height="368" fill="rgba(45,49,66,0.06)" stroke="#4f5d75" stroke-width="0.8"/>
+      <rect x="636" y="228" width="8" height="48" fill="rgba(45,49,66,0.06)" stroke="#4f5d75" stroke-width="0.8"/>
+      <rect x="896" y="324" width="8" height="48" fill="rgba(45,49,66,0.06)" stroke="#4f5d75" stroke-width="0.8"/>
+      <rect x="1156" y="500" width="8" height="48" fill="rgba(45,49,66,0.06)" stroke="#4f5d75" stroke-width="0.8"/>
+
+      <!-- Messages (drawn before labels) -->
+      <!-- M1: Header → Bridge  OPENPDF() -->
+      <line x1="120" y1="176" x2="376" y2="176" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- M2: Bridge → Dialog  DIALOG.OPEN -->
+      <line x1="384" y1="224" x2="636" y2="224" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+      <!-- M3: Dialog → Bridge  PATH -->
+      <line x1="636" y1="272" x2="384" y2="272" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <!-- M4: Bridge → Tauri  READ_PDF IPC -->
+      <line x1="384" y1="320" x2="896" y2="320" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+      <!-- M5: Tauri → Bridge  VEC<U8> -->
+      <line x1="896" y1="368" x2="384" y2="368" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <!-- M6: Bridge self  AS ARRAYBUFFER -->
+      <path d="M 384 416 L 424 416 L 424 448 L 384 448" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- M7: Bridge → EmbedPDF  OPENDOCBUFFER -->
+      <line x1="384" y1="496" x2="1156" y2="496" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- M8: EmbedPDF → Bridge  ACTIVE DOC (headline) -->
+      <line x1="1156" y1="544" x2="384" y2="544" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+      <!-- Message labels -->
+      <rect x="196" y="156" width="72" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="232" y="166" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">OPENPDF()</text>
+
+      <rect x="456" y="204" width="88" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="500" y="214" fill="#2e5aa8" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">DIALOG.OPEN</text>
+
+      <rect x="472" y="252" width="56" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="500" y="262" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">PATH</text>
+
+      <rect x="716" y="300" width="88" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="760" y="310" fill="#2e5aa8" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">READ_PDF IPC</text>
+
+      <rect x="732" y="348" width="56" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="760" y="358" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">VEC&lt;U8&gt;</text>
+
+      <rect x="432" y="424" width="104" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="484" y="434" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">AS ARRAYBUFFER</text>
+
+      <rect x="968" y="476" width="104" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="1020" y="486" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">OPENDOCBUFFER</text>
+
+      <rect x="724" y="524" width="72" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="760" y="534" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">ACTIVE DOC</text>
+
+      <!-- Actor boxes -->
+      <rect x="40" y="72" width="160" height="56" rx="6" fill="#f5f5f5"/>
+      <rect x="40" y="72" width="160" height="56" rx="6" fill="rgba(79,93,117,0.10)" stroke="#7a8399" stroke-width="1"/>
+      <rect x="48" y="80" width="24" height="12" rx="2" fill="transparent" stroke="rgba(122,131,153,0.40)" stroke-width="0.8"/>
+      <text x="60" y="89" fill="#7a8399" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">UI</text>
+      <text x="120" y="104" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Header</text>
+      <text x="120" y="119" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">form · openPdf</text>
+
+      <rect x="300" y="72" width="160" height="56" rx="6" fill="#f5f5f5"/>
+      <rect x="300" y="72" width="160" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <rect x="308" y="80" width="28" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.40)" stroke-width="0.8"/>
+      <text x="322" y="89" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">APP</text>
+      <text x="380" y="104" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">PdfOpenBridge</text>
+      <text x="380" y="119" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">single path</text>
+
+      <rect x="560" y="72" width="160" height="56" rx="6" fill="#f5f5f5"/>
+      <rect x="560" y="72" width="160" height="56" rx="6" fill="rgba(45,49,66,0.03)" stroke="rgba(45,49,66,0.30)" stroke-width="1"/>
+      <rect x="568" y="80" width="28" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.22)" stroke-width="0.8"/>
+      <text x="582" y="89" fill="#7a8399" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">PLG</text>
+      <text x="640" y="104" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Dialog</text>
+      <text x="640" y="119" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">plugin-dialog</text>
+
+      <rect x="820" y="72" width="160" height="56" rx="6" fill="#f5f5f5"/>
+      <rect x="820" y="72" width="160" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <rect x="828" y="80" width="28" height="12" rx="2" fill="transparent" stroke="rgba(45,49,66,0.40)" stroke-width="0.8"/>
+      <text x="842" y="89" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">IPC</text>
+      <text x="900" y="104" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Tauri</text>
+      <text x="900" y="119" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">read_pdf · Vec&lt;u8&gt;</text>
+
+      <rect x="1080" y="72" width="160" height="56" rx="6" fill="#f5f5f5"/>
+      <rect x="1080" y="72" width="160" height="56" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+      <rect x="1088" y="80" width="28" height="12" rx="2" fill="transparent" stroke="rgba(235,108,54,0.50)" stroke-width="0.8"/>
+      <text x="1102" y="89" fill="#eb6c36" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">PDF</text>
+      <text x="1160" y="104" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">EmbedPDF</text>
+      <text x="1160" y="119" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">document-manager</text>
+
+      <!-- Legend -->
+      <line x1="40" y1="616" x2="1240" y2="616" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+      <text x="40" y="636" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND</text>
+
+      <rect x="40" y="656" width="14" height="10" rx="2" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+      <text x="60" y="664" fill="#4f5d75" font-size="8" font-family="'Geist', sans-serif">Focal actor</text>
+
+      <rect x="172" y="652" width="4" height="18" fill="rgba(45,49,66,0.06)" stroke="#4f5d75" stroke-width="0.8"/>
+      <text x="184" y="664" fill="#4f5d75" font-size="8" font-family="'Geist', sans-serif">Activation</text>
+
+      <line x1="292" y1="660" x2="320" y2="660" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+      <text x="328" y="664" fill="#4f5d75" font-size="8" font-family="'Geist', sans-serif">Plugin / IPC</text>
+
+      <line x1="456" y1="660" x2="484" y2="660" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <text x="492" y="664" fill="#4f5d75" font-size="8" font-family="'Geist', sans-serif">Return</text>
+
+      <line x1="568" y1="660" x2="596" y2="660" stroke="#eb6c36" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+      <text x="604" y="664" fill="#4f5d75" font-size="8" font-family="'Geist', sans-serif">Primary response</text>
+    </svg>
+    </figure>
+  </main>
+</body>
+</html>

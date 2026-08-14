@@ -13,8 +13,7 @@
     "prepare": "panda codegen",
     "start": "next start",
     "tauri": "tauri",
-    "test": "node --experimental-strip-types --test src/**/*.test.mjs",
-    "test:outline": "node --experimental-strip-types --test src/components/pdf/outline-utils.test.mjs",
+    "test": "node --experimental-strip-types --test \"src/**/*.test.mjs\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
