@@ -2,7 +2,7 @@ import { defineGlobalStyles } from "@pandacss/dev";
 
 // Based on kiso.css v1.2.4 (MIT) https://github.com/tak-dcxi/kiso.css
 // Keep the previous globals.css reset surface; avoid Panda preflight drift.
-// Deviations: color-scheme: light dark with token-level light-dark();
+// Deviations: color-scheme: light so OS dark mode does not restyle native UI;
 // Body background/color/font from app tokens; text-decoration-inset omitted (initial value is auto);
 // Active press feedback added (tap-highlight is transparent), gated on no-preference.
 export const globalCss = defineGlobalStyles({
@@ -32,7 +32,7 @@ export const globalCss = defineGlobalStyles({
     scrollbarGutter: "stable",
     // タップハイライト（iOS）を抑える。
     WebkitTapHighlightColor: "transparent",
-    colorScheme: "light dark",
+    colorScheme: "light",
     fontSizeAdjust: "from-font",
     scrollbarColor: "{colors.scrollbarThumb} {colors.scrollbarTrack}",
     scrollbarWidth: "thin",
