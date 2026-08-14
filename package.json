@@ -27,16 +27,21 @@
     "@embedpdf/plugin-selection": "2.15.0",
     "@embedpdf/plugin-viewport": "2.15.0",
     "@embedpdf/plugin-zoom": "2.15.0",
+    "@streamdown/cjk": "^1.0.3",
+    "@streamdown/code": "^1.1.1",
+    "@streamdown/mermaid": "^1.0.2",
     "@tauri-apps/api": "^2.11.1",
     "@tauri-apps/plugin-dialog": "^2.4.0",
     "next": "16.3.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-error-boundary": "^6.0.0",
+    "streamdown": "^2.5.0",
     "use-chat-submit": "^1.0.9"
   },
   "devDependencies": {
     "@pandacss/dev": "^1.12.0",
+    "@tailwindcss/postcss": "^4.3.3",
     "@tauri-apps/cli": "^2.8.4",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "^22.15.0",
@@ -45,6 +50,7 @@
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "0.25.0",
+    "tailwindcss": "^4.3.3",
     "typescript": "7.0.2"
   },
   "packageManager": "pnpm@11.17.0"

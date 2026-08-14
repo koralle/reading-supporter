@@ -1,1 +1,22 @@
-@layer reset, base, tokens, recipes, utilities;
+@layer reset, base, tokens, recipes, theme, utilities;
+
+/* Tailwind is Streamdown-only: skip preflight so kiso.css / Panda keep the reset. */
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities) source(none);
+
+@source "../../node_modules/streamdown/dist/*.js";
+@source "../../node_modules/@streamdown/code/dist/*.js";
+@source "../../node_modules/@streamdown/mermaid/dist/*.js";
+@source "../../node_modules/@streamdown/cjk/dist/*.js";
+
+@theme inline {
+  --color-background: var(--colors-surface);
+  --color-foreground: var(--colors-fg);
+  --color-muted: var(--colors-stage);
+  --color-muted-foreground: var(--colors-muted);
+  --color-border: var(--colors-line);
+  --color-sidebar: var(--colors-stage);
+  --color-primary: var(--colors-primary);
+  --font-sans: var(--fonts-body);
+  --font-mono: var(--fonts-mono);
+}

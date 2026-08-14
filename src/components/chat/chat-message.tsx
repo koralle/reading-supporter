@@ -2,6 +2,7 @@
 
 import { MessagePartPrimitive, MessagePrimitive } from "@assistant-ui/react";
 import { cx, css } from "../../../styled-system/css";
+import { AssistantMarkdown } from "./assistant-markdown";
 
 const message = css({
   display: "flex",
@@ -27,7 +28,6 @@ const messageBubble = css({
   padding: "10px 12px",
   fontSize: "14px",
   lineHeight: "1.7",
-  whiteSpace: "pre-wrap",
   smDown: {
     maxWidth: "94%",
   },
@@ -36,6 +36,7 @@ const messageBubble = css({
 const messageBubbleUser = css({
   background: "primarySoft",
   color: "fg",
+  whiteSpace: "pre-wrap",
 });
 
 const messageBubbleAssistant = css({
@@ -65,6 +66,14 @@ export function ChatMessage({ role }: ChatMessageProps) {
         <MessagePrimitive.Parts>
           {({ part }) => {
             if (part.type === "text") {
+              if (role === "assistant") {
+                return (
+                  <AssistantMarkdown
+                    text={part.text}
+                    isAnimating={part.status.type === "running"}
+                  />
+                );
+              }
               return <MessagePartPrimitive.Text />;
             }
             if (part.type === "tool-call") return part.toolUI ?? null;
