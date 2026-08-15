@@ -1,12 +1,9 @@
 "use client";
 
 import { css } from "../../../styled-system/css";
-import { tapTarget } from "../../styles/visually-hidden";
 import { acpClient } from "../../lib/acp";
 import { AcpStatus } from "../chat/acp-connection-status";
 import { OpenPdfSubmit } from "../pdf/open-pdf-submit";
-import { MobilePaneSwitcher } from "./mobile-pane-switcher";
-import type { MobilePane } from "./mobile-pane-switcher";
 
 const appHeader = css({
   display: "flex",
@@ -19,10 +16,6 @@ const appHeader = css({
   borderBottomStyle: "solid",
   borderBottomColor: "line",
   background: "surface",
-  smDown: {
-    paddingInline: "12px",
-    gap: "8px",
-  },
 });
 
 const brand = css({
@@ -67,48 +60,15 @@ const actions = css({
   flexShrink: "0",
 });
 
-const ghostButton = css({
-  ...tapTarget,
-  display: "none",
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: "lineStrong",
-  borderRadius: "control",
-  background: "surface",
-  color: "fg",
-  fontSize: "0.875rem",
-  fontWeight: "600",
-  paddingInline: "12px",
-  md: {
-    display: "inline-flex",
-    alignItems: "center",
-  },
-  _hover: {
-    background: "stage",
-  },
-});
-
 type WorkspaceHeaderProps = {
   documentName: string | null;
   openPdf: (() => Promise<void>) | null;
-  chatOpen: boolean;
-  mobilePane: MobilePane;
-  hasSelection: boolean;
-  onToggleChat: () => void;
-  onRead: () => void;
-  onAsk: () => void;
   onBridgeError: (message: string) => void;
 };
 
 export function WorkspaceHeader({
   documentName,
   openPdf,
-  chatOpen,
-  mobilePane,
-  hasSelection,
-  onToggleChat,
-  onRead,
-  onAsk,
   onBridgeError,
 }: WorkspaceHeaderProps) {
   const sessionPromise = acpClient.getSessionResource();
@@ -125,16 +85,7 @@ export function WorkspaceHeader({
         <span className={crumbName}>{documentName ?? "PDFを開く"}</span>
       </div>
       <div className={actions}>
-        <MobilePaneSwitcher
-          mobilePane={mobilePane}
-          hasSelection={hasSelection}
-          onRead={onRead}
-          onAsk={onAsk}
-        />
         <AcpStatus sessionPromise={sessionPromise} onBridgeError={onBridgeError} />
-        <button type="button" className={ghostButton} onClick={onToggleChat}>
-          {chatOpen ? "チャットを隠す" : "チャットを表示"}
-        </button>
         {openPdf ? (
           <form action={openPdf}>
             <OpenPdfSubmit />

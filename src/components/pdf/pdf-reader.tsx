@@ -25,12 +25,8 @@ const readerBody = css({
   minHeight: "0",
   height: "100%",
   display: "grid",
-  gridTemplateColumns: "1fr",
-  gridTemplateRows: "auto minmax(0, 1fr)",
-  "@container reader (min-width: 40rem)": {
-    gridTemplateColumns: "240px minmax(0, 1fr)",
-    gridTemplateRows: "minmax(0, 1fr)",
-  },
+  gridTemplateColumns: "240px minmax(0, 1fr)",
+  gridTemplateRows: "minmax(0, 1fr)",
 });
 
 const engineLoading = css({

@@ -35,9 +35,6 @@ const messageBubbleUser = css({
   background: "primarySoft",
   color: "fg",
   whiteSpace: "pre-wrap",
-  smDown: {
-    maxInlineSize: "94%",
-  },
 });
 
 const messageBubbleAssistant = css({

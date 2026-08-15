@@ -5,14 +5,9 @@ export default defineConfig({
   preflight: false,
   include: ["./src/**/*.{js,jsx,ts,tsx}"],
   exclude: [],
-  jsxFramework: "react",
   outdir: "styled-system",
   theme: {
     extend: {
-      breakpoints: {
-        sm: "521px",
-        md: "901px",
-      },
       tokens: {
         colors: {
           primary: { value: "#1D4ED8" },
@@ -20,7 +15,6 @@ export default defineConfig({
           primarySoft: { value: "#EFF6FF" },
           primaryText: { value: "#1D4ED8" },
           onPrimary: { value: "#FFFFFF" },
-          secondary: { value: "#6D28D9" },
           success: { value: "#15803D" },
           danger: { value: "#B91C1C" },
           dangerBorder: { value: "rgba(185, 28, 28, 0.35)" },

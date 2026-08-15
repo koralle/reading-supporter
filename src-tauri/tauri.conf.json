@@ -16,12 +16,12 @@
         "title": "Reading Supporter",
         "width": 1440,
         "height": 900,
-        "minWidth": 390,
-        "minHeight": 600
+        "minWidth": 1024,
+        "minHeight": 700
       }
     ],
     "security": {
-      "csp": "default-src 'self' ipc: http://ipc.localhost; connect-src 'self' ipc: http://ipc.localhost https://*.embedpdf.com; img-src 'self' data: blob: asset:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:"
+      "csp": "default-src 'self' ipc: http://ipc.localhost; connect-src 'self' ipc: http://ipc.localhost https://*.embedpdf.com; img-src 'self' data: blob: asset:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:"
     }
   },
   "bundle": {

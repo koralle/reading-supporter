@@ -2,21 +2,19 @@
 
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import { styled } from "../../styled-system/jsx";
+import { css } from "../../styled-system/css";
 import { ErrorBoundary } from "react-error-boundary";
 
+const loading = css({
+  display: "grid",
+  minBlockSize: "100svh",
+  placeContent: "center",
+  color: "muted",
+  fontSize: "14px",
+});
+
 function AppLoading() {
-  return (
-    <styled.div
-      display="grid"
-      minBlockSize="100svh"
-      placeContent="center"
-      color="muted"
-      fontSize="14px"
-    >
-      読み込み中…
-    </styled.div>
-  );
+  return <div className={loading}>読み込み中…</div>;
 }
 
 const Workspace = dynamic(() => import("./workspace/workspace"), {

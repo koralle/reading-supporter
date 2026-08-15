@@ -15,16 +15,10 @@ const chatThread = css({
 type ChatPanelProps = {
   selectedText: string;
   bridgeError: string | null;
-  onAskFocus?: (() => void) | undefined;
-  askFocusToken?: number | undefined;
+  askFocusToken: number;
 };
 
-export function ChatPanel({
-  selectedText,
-  bridgeError,
-  onAskFocus,
-  askFocusToken,
-}: ChatPanelProps) {
+export function ChatPanel({ selectedText, bridgeError, askFocusToken }: ChatPanelProps) {
   const selectedTextRef = useRef(selectedText);
   selectedTextRef.current = selectedText;
 
@@ -57,7 +51,6 @@ export function ChatPanel({
         <ChatThread
           selectedText={selectedText}
           bridgeError={bridgeError}
-          onAskFocus={onAskFocus}
           askFocusToken={askFocusToken}
         />
       </AssistantRuntimeProvider>

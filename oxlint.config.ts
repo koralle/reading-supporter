@@ -78,8 +78,6 @@ export default defineConfig({
     "no-unmodified-loop-condition": "off",
     // ErrorBoundary fallbackRender / Suspense fallback pass render props
     "react/no-unstable-nested-components": ["error", { allowAsProps: true }],
-    // Mobile pane switcher uses a form with tab roles for progressive enhancement
-    "jsx-a11y/no-noninteractive-element-to-interactive-role": "off",
   },
   overrides: [
     {

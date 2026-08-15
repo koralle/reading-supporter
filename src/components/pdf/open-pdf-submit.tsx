@@ -30,15 +30,13 @@ const openButton = css({
 
 type OpenPdfSubmitProps = {
   disabled?: boolean | undefined;
-  id?: string | undefined;
 };
 
-export function OpenPdfSubmit({ disabled = false, id }: OpenPdfSubmitProps) {
+export function OpenPdfSubmit({ disabled = false }: OpenPdfSubmitProps) {
   const { pending } = useFormStatus();
   const isDisabled = disabled || pending;
   return (
     <button
-      id={id}
       className={openButton}
       type={disabled ? "button" : "submit"}
       disabled={isDisabled}
