@@ -11,7 +11,7 @@ import { WorkspaceHeader } from "./workspace-header";
 const workspace = css({
   height: "100vh",
   minHeight: "100vh",
-  minInlineSize: "900px",
+  minInlineSize: "min(900px, 100%)",
   display: "grid",
   gridTemplateRows: "56px minmax(0, 1fr)",
   gridTemplateAreas: `"header" "desk"`,
