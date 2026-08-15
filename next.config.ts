@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  transpilePackages: ["shiki", "streamdown"],
 };
 
 export default nextConfig;

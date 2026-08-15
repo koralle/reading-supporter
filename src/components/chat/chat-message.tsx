@@ -2,6 +2,7 @@
 
 import { MessagePartPrimitive, MessagePrimitive } from "@assistant-ui/react";
 import { cx, css } from "../../../styled-system/css";
+import { AssistantMarkdown } from "./assistant-markdown";
 
 const message = css({
   display: "flex",
@@ -11,7 +12,7 @@ const message = css({
     alignItems: "flex-end",
   },
   "&[data-role=assistant]": {
-    alignItems: "flex-start",
+    alignItems: "stretch",
   },
 });
 
@@ -22,23 +23,25 @@ const messageLabel = css({
 });
 
 const messageBubble = css({
-  maxWidth: "88%",
+  minInlineSize: "0",
   borderRadius: "control",
   padding: "10px 12px",
   fontSize: "14px",
   lineHeight: "1.7",
-  whiteSpace: "pre-wrap",
-  smDown: {
-    maxWidth: "94%",
-  },
 });
 
 const messageBubbleUser = css({
+  maxInlineSize: "88%",
   background: "primarySoft",
   color: "fg",
+  whiteSpace: "pre-wrap",
+  smDown: {
+    maxInlineSize: "94%",
+  },
 });
 
 const messageBubbleAssistant = css({
+  inlineSize: "100%",
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "line",
@@ -65,6 +68,14 @@ export function ChatMessage({ role }: ChatMessageProps) {
         <MessagePrimitive.Parts>
           {({ part }) => {
             if (part.type === "text") {
+              if (role === "assistant") {
+                return (
+                  <AssistantMarkdown
+                    text={part.text}
+                    isAnimating={part.status.type === "running"}
+                  />
+                );
+              }
               return <MessagePartPrimitive.Text />;
             }
             if (part.type === "tool-call") return part.toolUI ?? null;

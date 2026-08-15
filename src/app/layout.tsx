@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import "streamdown/styles.css";
 import "./globals.css";
 
 const notoSansJP = localFont({
