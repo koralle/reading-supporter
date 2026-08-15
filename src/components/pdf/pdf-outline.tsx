@@ -41,20 +41,39 @@ function getBookmarkPromise(
   return promise;
 }
 
+const OUTLINE_BODY_ID = "pdf-outline-body";
+
 const outlineShell = css({
   minHeight: "0",
   display: "grid",
-  gridTemplateRows: "auto minmax(0, 1fr)",
-  borderRightWidth: "1px",
-  borderRightStyle: "solid",
-  borderRightColor: "line",
-  background: "surface",
+  gridTemplateRows: "auto",
+  borderRightWidth: "0",
+  borderBottomWidth: "1px",
+  borderBottomStyle: "solid",
+  borderBottomColor: "line",
+  background: "stage",
+  '&[data-open="true"]': {
+    gridTemplateRows: "auto minmax(0, 240px)",
+  },
+  "@container reader (min-width: 40rem)": {
+    gridTemplateRows: "auto minmax(0, 1fr)",
+    borderRightWidth: "1px",
+    borderRightStyle: "solid",
+    borderRightColor: "line",
+    borderBottomWidth: "0",
+    background: "surface",
+    '&[data-open="true"]': {
+      gridTemplateRows: "auto minmax(0, 1fr)",
+    },
+  },
 });
 
 const outlineHeader = css({
   minHeight: "48px",
   display: "flex",
   alignItems: "center",
+  justifyContent: "space-between",
+  gap: "10px",
   padding: "10px 12px",
   borderBottomWidth: "1px",
   borderBottomStyle: "solid",
@@ -68,6 +87,25 @@ const outlineHeading = css({
   fontWeight: "600",
 });
 
+const outlineToggle = css({
+  ...tapTarget,
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "6px",
+  borderWidth: "1px",
+  borderStyle: "solid",
+  borderColor: "lineStrong",
+  borderRadius: "control",
+  background: "surface",
+  paddingInline: "8px",
+  color: "muted",
+  fontSize: "0.75rem",
+  fontWeight: "600",
+  "@container reader (min-width: 40rem)": {
+    display: "none",
+  },
+});
+
 const outlineBody = css({
   minHeight: "0",
   overflowY: "auto",
@@ -75,6 +113,13 @@ const outlineBody = css({
   padding: "8px 7px 18px",
   scrollbarColor: "{colors.scrollbarThumb} {colors.scrollbarTrack}",
   scrollbarWidth: "thin",
+  display: "none",
+  '&[data-open="true"]': {
+    display: "block",
+  },
+  "@container reader (min-width: 40rem)": {
+    display: "block",
+  },
 });
 
 const outlineList = css({
@@ -420,13 +465,25 @@ function OutlinePanelBody({
 
 export function PdfOutline({ engine }: { engine: EmbedPdfEngine }) {
   const { activeDocument } = useActiveDocument();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <aside className={outlineShell} aria-label="PDFの目次パネル">
+    <aside className={outlineShell} data-open={isOpen} aria-label="PDFの目次パネル">
       <div className={outlineHeader}>
         <h2 className={outlineHeading}>目次</h2>
+        <button
+          aria-controls={OUTLINE_BODY_ID}
+          aria-expanded={isOpen}
+          aria-label="目次"
+          className={outlineToggle}
+          type="button"
+          onClick={() => setIsOpen((open) => !open)}
+        >
+          {isOpen ? "閉じる" : "開く"}
+          <span aria-hidden="true">{isOpen ? "⌃" : "⌄"}</span>
+        </button>
       </div>
-      <div className={outlineBody}>
+      <div className={outlineBody} data-open={isOpen} id={OUTLINE_BODY_ID}>
         <OutlinePanelBody engine={engine} activeDocument={activeDocument} />
       </div>
     </aside>

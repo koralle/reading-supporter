@@ -11,6 +11,7 @@ import { WorkspaceHeader } from "./workspace-header";
 const workspace = css({
   height: "100vh",
   minHeight: "100vh",
+  minInlineSize: "900px",
   display: "grid",
   gridTemplateRows: "56px minmax(0, 1fr)",
   gridTemplateAreas: `"header" "desk"`,
@@ -42,6 +43,8 @@ const column = css({
 });
 
 const readerColumn = css({
+  containerType: "inline-size",
+  containerName: "reader",
   display: "grid",
   gridTemplateRows: "minmax(0, 1fr)",
   borderRightWidth: "1px",
