@@ -23,7 +23,7 @@ export type PdfOutlineBookmark = {
   children?: PdfOutlineBookmark[];
 };
 
-export type OutlineItem = {
+type OutlineItem = {
   id: string;
   title: string;
   depth: number;
@@ -31,7 +31,7 @@ export type OutlineItem = {
   bookmark: PdfOutlineBookmark;
 };
 
-export type ScrollTarget = {
+type ScrollTarget = {
   pageNumber: number;
   pageCoordinates?: {
     x: number;
@@ -39,13 +39,10 @@ export type ScrollTarget = {
   };
 };
 
-/**
- * PDFium/EmbedPDF `PdfZoomMode.XYZ`. `FPDFDest_GetLocationInPage` returns these
- * params in PDF user space (origin at the crop-box lower-left, y-up).
- */
-export const PDF_ZOOM_MODE_XYZ = 1;
+/** PDFium/EmbedPDF `PdfZoomMode.XYZ` (PDF user space, crop-box origin, y-up). */
+const PDF_ZOOM_MODE_XYZ = 1;
 
-export type OutlinePageGeometry = {
+type OutlinePageGeometry = {
   size: { width: number; height: number };
   rotation?: number;
   boxes?: {
@@ -53,16 +50,16 @@ export type OutlinePageGeometry = {
   };
 };
 
-export type ScrollTargetContext = {
+type ScrollTargetContext = {
   pages?: readonly (OutlinePageGeometry | undefined)[] | null;
 };
 
-export type OutlineDocumentState = {
+type OutlineDocumentState = {
   status: string;
   document: unknown | null;
 };
 
-export type OutlinePanelKind = "empty" | "loading" | "document-error" | "ready";
+type OutlinePanelKind = "empty" | "loading" | "document-error" | "ready";
 
 export function getOutlinePanelKind(
   activeDocument: OutlineDocumentState | null | undefined,
@@ -96,7 +93,7 @@ function isXyzZoomMode(mode: number | string | undefined): boolean {
  * (top-left, y-down). Do not apply `page.rotation`: `scrollToPage` already
  * applies effective page/viewer rotation via `transformPosition`.
  */
-export function toScrollPageCoordinates(
+function toScrollPageCoordinates(
   point: { x: number; y: number },
   page: OutlinePageGeometry,
 ): { x: number; y: number } {

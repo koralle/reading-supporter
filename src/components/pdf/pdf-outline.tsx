@@ -19,8 +19,6 @@ import {
 type EmbedPdfEngine = NonNullable<ReturnType<typeof usePdfiumEngine>["engine"]>;
 type PdfDocument = Parameters<EmbedPdfEngine["getBookmarks"]>[0];
 
-const OUTLINE_BODY_ID = "pdf-outline-body";
-
 const bookmarkPromises = new WeakMap<object, Promise<PdfOutlineBookmark[]>>();
 
 function getBookmarkPromise(
@@ -42,6 +40,8 @@ function getBookmarkPromise(
   bookmarkPromises.set(document, promise);
   return promise;
 }
+
+const OUTLINE_BODY_ID = "pdf-outline-body";
 
 const outlineShell = css({
   minHeight: "0",
@@ -87,7 +87,7 @@ const outlineHeading = css({
   fontWeight: "600",
 });
 
-const mobileToggle = css({
+const outlineToggle = css({
   ...tapTarget,
   display: "inline-flex",
   alignItems: "center",
@@ -475,7 +475,7 @@ export function PdfOutline({ engine }: { engine: EmbedPdfEngine }) {
           aria-controls={OUTLINE_BODY_ID}
           aria-expanded={isOpen}
           aria-label="目次"
-          className={mobileToggle}
+          className={outlineToggle}
           type="button"
           onClick={() => setIsOpen((open) => !open)}
         >

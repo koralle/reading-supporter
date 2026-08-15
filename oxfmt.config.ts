@@ -6,7 +6,6 @@ export default defineConfig({
   bracketSpacing: true,
   ignorePatterns: [
     "pnpm-lock.yaml",
-    "package-lock.json",
     ".next/**",
     "out/**",
     "styled-system/**",

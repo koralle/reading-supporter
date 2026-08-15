@@ -23,13 +23,11 @@ const pdfError = css({
 
 export type PdfChrome = {
   documentName: string | null;
-  error: string | null;
   openPdf: (() => Promise<void>) | null;
 };
 
 const IDLE_CHROME: PdfChrome = {
   documentName: null,
-  error: null,
   openPdf: null,
 };
 
@@ -70,10 +68,9 @@ export function PdfOpenBridge({ onChromeChange }: PdfOpenBridgeProps) {
   useEffect(() => {
     onChromeChange({
       documentName: activeDocument?.name ?? null,
-      error,
       openPdf,
     });
-  }, [activeDocument?.name, error, onChromeChange, openPdf]);
+  }, [activeDocument?.name, onChromeChange, openPdf]);
 
   return error ? (
     <p className={pdfError} role="alert">

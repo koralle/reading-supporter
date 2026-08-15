@@ -219,11 +219,10 @@ function usePersistedSubmitMode() {
 
 type ChatComposerProps = {
   selectedText: string;
-  onAskFocus?: (() => void) | undefined;
-  askFocusToken?: number | undefined;
+  askFocusToken: number;
 };
 
-export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: ChatComposerProps) {
+export function ChatComposer({ selectedText, askFocusToken }: ChatComposerProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { mode, isApple, isEnterMode, nextMode, toggleMode } = usePersistedSubmitMode();
 
@@ -258,7 +257,7 @@ export function ChatComposer({ selectedText, onAskFocus, askFocusToken = 0 }: Ch
   const toggleTitle = `${describeMode(mode, isApple)}（クリックで切替）`;
 
   return (
-    <ComposerPrimitive.Root className={composer} onFocusCapture={onAskFocus}>
+    <ComposerPrimitive.Root className={composer}>
       {selectedText.trim() ? (
         <div className={selectedContext}>
           <strong>選択中</strong>

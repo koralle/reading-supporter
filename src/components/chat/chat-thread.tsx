@@ -18,9 +18,6 @@ const threadViewport = css({
   padding: "16px",
   scrollbarColor: "{colors.scrollbarThumb} {colors.scrollbarTrack}",
   scrollbarWidth: "thin",
-  smDown: {
-    paddingInline: "12px",
-  },
 });
 
 const composerWrap = css({
@@ -34,16 +31,10 @@ const composerWrap = css({
 type ChatThreadProps = {
   selectedText: string;
   bridgeError: string | null;
-  onAskFocus?: (() => void) | undefined;
-  askFocusToken?: number | undefined;
+  askFocusToken: number;
 };
 
-export function ChatThread({
-  selectedText,
-  bridgeError,
-  onAskFocus,
-  askFocusToken,
-}: ChatThreadProps) {
+export function ChatThread({ selectedText, bridgeError, askFocusToken }: ChatThreadProps) {
   return (
     <ThreadPrimitive.Root className={threadRoot}>
       <ThreadPrimitive.Viewport className={threadViewport} turnAnchor="top">
@@ -53,11 +44,7 @@ export function ChatThread({
 
         <ThreadPrimitive.ViewportFooter className={composerWrap}>
           <ChatWelcome selectedText={selectedText} bridgeError={bridgeError} />
-          <ChatComposer
-            selectedText={selectedText}
-            onAskFocus={onAskFocus}
-            askFocusToken={askFocusToken}
-          />
+          <ChatComposer selectedText={selectedText} askFocusToken={askFocusToken} />
         </ThreadPrimitive.ViewportFooter>
       </ThreadPrimitive.Viewport>
     </ThreadPrimitive.Root>

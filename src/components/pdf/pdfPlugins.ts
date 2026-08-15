@@ -14,9 +14,9 @@ export const pdfPlugins = [
   createPluginRegistration(RenderPluginPackage),
   createPluginRegistration(InteractionManagerPluginPackage),
   createPluginRegistration(SelectionPluginPackage, {
-    menuHeight: 36, // Height of the custom selection menu, used for above/below placement.
+    menuHeight: 36,
   }),
   createPluginRegistration(ZoomPluginPackage, {
-    defaultZoomLevel: ZoomMode.FitPage, // You can pass options here!
+    defaultZoomLevel: ZoomMode.FitPage,
   }),
 ];
