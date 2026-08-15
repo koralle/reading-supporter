@@ -66,11 +66,7 @@ type WorkspaceHeaderProps = {
   onBridgeError: (message: string) => void;
 };
 
-export function WorkspaceHeader({
-  documentName,
-  openPdf,
-  onBridgeError,
-}: WorkspaceHeaderProps) {
+export function WorkspaceHeader({ documentName, openPdf, onBridgeError }: WorkspaceHeaderProps) {
   const sessionPromise = acpClient.getSessionResource();
 
   return (
