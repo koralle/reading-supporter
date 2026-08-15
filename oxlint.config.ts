@@ -91,10 +91,12 @@ export default defineConfig({
       },
     },
     {
-      files: ["src/**/*.test.mjs"],
+      files: ["src/**/*.test.ts"],
       rules: {
         "import/no-nodejs-modules": "off",
         "import/no-unassigned-import": "off",
+        "node/no-sync": "off",
+        "unicorn/relative-url-style": "off",
       },
     },
     {

@@ -13,7 +13,7 @@
     "prepare": "panda codegen",
     "start": "next start",
     "tauri": "tauri",
-    "test": "node --experimental-strip-types --test \"src/**/*.test.mjs\"",
+    "test": "node --experimental-strip-types --test \"src/**/*.test.ts\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
