@@ -7,23 +7,23 @@ import { OpenPdfSubmit } from "../pdf/open-pdf-submit";
 
 const appHeader = css({
   display: "flex",
-  alignItems: "center",
-  gap: "12px",
+  flexWrap: "wrap",
+  alignItems: "safe center",
+  gap: "3",
   minInlineSize: "0",
-  height: "56px",
-  paddingInline: "16px",
-  borderBottomWidth: "1px",
-  borderBottomStyle: "solid",
-  borderBottomColor: "line",
+  paddingInline: "4",
+  paddingBlock: "1.5",
+  borderBlockEndWidth: "1px",
+  borderBlockEndStyle: "solid",
+  borderBlockEndColor: "line",
   background: "surface",
 });
 
 const brand = css({
   display: "flex",
-  alignItems: "center",
-  gap: "8px",
+  alignItems: "safe center",
+  gap: "2",
   minInlineSize: "0",
-  fontSize: "16px",
   fontWeight: "600",
   lineHeight: "1.2",
 });
@@ -32,7 +32,7 @@ const brandName = css({
   margin: "0",
   flexShrink: "0",
   color: "fg",
-  fontSize: "1rem",
+  fontSize: "md",
   fontWeight: "600",
   lineHeight: "1.2",
 });
@@ -46,7 +46,7 @@ const crumbName = css({
   minInlineSize: "0",
   overflow: "hidden",
   color: "muted",
-  fontSize: "14px",
+  fontSize: "sm",
   fontWeight: "400",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -54,8 +54,8 @@ const crumbName = css({
 
 const actions = css({
   display: "flex",
-  alignItems: "center",
-  gap: "8px",
+  alignItems: "safe center",
+  gap: "2",
   marginInlineStart: "auto",
   flexShrink: "0",
 });

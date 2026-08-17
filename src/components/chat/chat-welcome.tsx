@@ -4,31 +4,30 @@ import { ThreadPrimitive } from "@assistant-ui/react";
 import { css } from "../../../styled-system/css";
 
 const threadWelcome = css({
-  minHeight: "100%",
+  minBlockSize: "100%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  padding: "8px 0 16px",
+  gap: "2",
+  paddingBlock: "2 4",
 });
 
 const welcomeBody = css({
   margin: "0",
   color: "muted",
-  fontSize: "14px",
+  fontSize: "sm",
   lineHeight: "1.7",
 });
 
 const selectionReady = css({
-  marginTop: "8px",
   color: "primaryText",
-  fontSize: "0.875rem",
+  fontSize: "sm",
   fontWeight: "600",
 });
 
 const bridgeErrorStyle = css({
-  marginTop: "12px",
   color: "danger",
-  fontSize: "12px",
+  fontSize: "xs",
   lineHeight: "1.5",
 });
 

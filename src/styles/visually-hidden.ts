@@ -7,16 +7,16 @@ export const visuallyHidden = css({
   clipPath: "inset(50%)",
   whiteSpace: "nowrap",
   borderWidth: "0",
-  width: "1px",
-  height: "1px",
+  inlineSize: "1px",
+  blockSize: "1px",
   padding: "0",
   margin: "-1px",
 });
 
 /** WCAG 2.5.8 floor, bumped on coarse pointers (`forms` / `css` touch targets). */
 export const tapTarget = {
-  minBlockSize: "44px",
+  minBlockSize: "tap",
   "@media (pointer: coarse)": {
-    minBlockSize: "48px",
+    minBlockSize: "tapCoarse",
   },
 } as const;

@@ -9,34 +9,37 @@ import type { PdfChrome } from "../pdf/pdf-open-bridge";
 import { WorkspaceHeader } from "./workspace-header";
 
 const workspace = css({
-  height: "100vh",
-  minHeight: "100vh",
-  minInlineSize: "min(900px, 100%)",
   display: "grid",
-  gridTemplateRows: "56px minmax(0, 1fr)",
+  gridTemplateRows: "auto minmax(0, 1fr)",
   gridTemplateAreas: `"header" "desk"`,
+  blockSize: "100dvb",
+  minBlockSize: "100dvb",
   overflow: "hidden",
   background: "surface",
-  "@supports (height: 100dvh)": {
-    height: "100dvh",
-    minHeight: "100dvh",
-  },
 });
 
 const headerArea = css({
   gridArea: "header",
+  minInlineSize: "0",
 });
 
 const desk = css({
   gridArea: "desk",
-  minHeight: "0",
+  minBlockSize: "0",
   minInlineSize: "0",
   display: "grid",
-  gridTemplateColumns: "minmax(0, 1.15fr) minmax(420px, 0.85fr)",
+  containerType: "inline-size",
+  containerName: "desk",
+  gridTemplateColumns: "minmax(0, 1fr)",
+  gridTemplateRows: "minmax(0, 1.15fr) minmax(0, 0.85fr)",
+  "@container desk (min-width: 48rem)": {
+    gridTemplateColumns: "minmax(0, 1.15fr) minmax(min-content, 0.85fr)",
+    gridTemplateRows: "minmax(0, 1fr)",
+  },
 });
 
 const column = css({
-  minHeight: "0",
+  minBlockSize: "0",
   minInlineSize: "0",
   overflow: "hidden",
   background: "surface",
@@ -47,9 +50,15 @@ const readerColumn = css({
   containerName: "reader",
   display: "grid",
   gridTemplateRows: "minmax(0, 1fr)",
-  borderRightWidth: "1px",
-  borderRightStyle: "solid",
-  borderRightColor: "line",
+  borderBlockEndWidth: "1px",
+  borderBlockEndStyle: "solid",
+  borderBlockEndColor: "line",
+  "@container desk (min-width: 48rem)": {
+    borderBlockEndWidth: "0",
+    borderInlineEndWidth: "1px",
+    borderInlineEndStyle: "solid",
+    borderInlineEndColor: "line",
+  },
 });
 
 const chatColumn = css({

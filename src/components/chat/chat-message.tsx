@@ -7,9 +7,9 @@ import { AssistantMarkdown } from "./assistant-markdown";
 const message = css({
   display: "flex",
   flexDirection: "column",
-  gap: "6px",
+  gap: "1.5",
   "&[data-role=user]": {
-    alignItems: "flex-end",
+    alignItems: "end",
   },
   "&[data-role=assistant]": {
     alignItems: "stretch",
@@ -19,14 +19,15 @@ const message = css({
 const messageLabel = css({
   color: "muted",
   fontFamily: "mono",
-  fontSize: "12px",
+  fontSize: "xs",
 });
 
 const messageBubble = css({
   minInlineSize: "0",
   borderRadius: "control",
-  padding: "10px 12px",
-  fontSize: "14px",
+  paddingBlock: "2.5",
+  paddingInline: "3",
+  fontSize: "sm",
   lineHeight: "1.7",
 });
 

@@ -3,19 +3,19 @@
 import { css } from "../../../styled-system/css";
 
 const pdfEmpty = css({
-  height: "100%",
-  minHeight: "0",
+  blockSize: "100%",
+  minBlockSize: "0",
   display: "grid",
   placeItems: "center",
-  padding: "40px",
+  padding: "10",
   textAlign: "center",
 });
 
 const pdfEmptyBody = css({
-  maxWidth: "320px",
+  maxInlineSize: "22em",
   margin: "0",
   color: "muted",
-  fontSize: "14px",
+  fontSize: "sm",
   lineHeight: "1.7",
 });
 

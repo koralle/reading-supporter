@@ -12,7 +12,6 @@ const chart = css({
     inlineSize: "100%",
     maxInlineSize: "100%",
     blockSize: "auto",
-    height: "auto",
   },
 });
 
@@ -23,7 +22,7 @@ const errorBox = css({
   fontSize: "0.9em",
   background: "stage",
   padding: "0.6em 0.75em",
-  borderRadius: "4px",
+  borderRadius: "sm",
 });
 
 type MermaidChartProps = {

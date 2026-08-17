@@ -10,31 +10,32 @@ import { css } from "../../../styled-system/css";
 import { SelectionMenu } from "./selection-menu";
 
 const pdfEmpty = css({
-  height: "100%",
-  minHeight: "0",
+  blockSize: "100%",
+  minBlockSize: "0",
   display: "grid",
   placeItems: "center",
-  padding: "40px",
+  padding: "10",
   textAlign: "center",
 });
 
 const pdfError = css({
-  margin: "20px",
-  padding: "12px 14px",
+  margin: "5",
+  paddingBlock: "3",
+  paddingInline: "3.5",
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "dangerBorder",
   borderRadius: "control",
   background: "dangerBg",
   color: "danger",
-  fontSize: "12px",
+  fontSize: "xs",
 });
 
 const pdfViewport = css({
-  width: "100%",
-  height: "100%",
-  minWidth: "0",
-  minHeight: "0",
+  inlineSize: "100%",
+  blockSize: "100%",
+  minInlineSize: "0",
+  minBlockSize: "0",
   overflow: "auto",
 });
 

@@ -44,23 +44,24 @@ function getBookmarkPromise(
 const OUTLINE_BODY_ID = "pdf-outline-body";
 
 const outlineShell = css({
-  minHeight: "0",
+  minBlockSize: "0",
+  minInlineSize: "0",
   display: "grid",
   gridTemplateRows: "auto",
-  borderRightWidth: "0",
-  borderBottomWidth: "1px",
-  borderBottomStyle: "solid",
-  borderBottomColor: "line",
+  borderInlineEndWidth: "0",
+  borderBlockEndWidth: "1px",
+  borderBlockEndStyle: "solid",
+  borderBlockEndColor: "line",
   background: "stage",
   '&[data-open="true"]': {
-    gridTemplateRows: "auto minmax(0, 240px)",
+    gridTemplateRows: "auto minmax(0, min(15rem, 45cqi))",
   },
   "@container reader (min-width: 40rem)": {
     gridTemplateRows: "auto minmax(0, 1fr)",
-    borderRightWidth: "1px",
-    borderRightStyle: "solid",
-    borderRightColor: "line",
-    borderBottomWidth: "0",
+    borderInlineEndWidth: "1px",
+    borderInlineEndStyle: "solid",
+    borderInlineEndColor: "line",
+    borderBlockEndWidth: "0",
     background: "surface",
     '&[data-open="true"]': {
       gridTemplateRows: "auto minmax(0, 1fr)",
@@ -69,21 +70,21 @@ const outlineShell = css({
 });
 
 const outlineHeader = css({
-  minHeight: "48px",
   display: "flex",
-  alignItems: "center",
+  alignItems: "safe center",
   justifyContent: "space-between",
-  gap: "10px",
-  padding: "10px 12px",
-  borderBottomWidth: "1px",
-  borderBottomStyle: "solid",
-  borderBottomColor: "line",
+  gap: "2.5",
+  paddingBlock: "2.5",
+  paddingInline: "3",
+  borderBlockEndWidth: "1px",
+  borderBlockEndStyle: "solid",
+  borderBlockEndColor: "line",
 });
 
 const outlineHeading = css({
   margin: "0",
   color: "fg",
-  fontSize: "14px",
+  fontSize: "sm",
   fontWeight: "600",
 });
 
@@ -91,15 +92,15 @@ const outlineToggle = css({
   ...tapTarget,
   display: "inline-flex",
   alignItems: "center",
-  gap: "6px",
+  gap: "1.5",
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "lineStrong",
   borderRadius: "control",
   background: "surface",
-  paddingInline: "8px",
+  paddingInline: "2",
   color: "muted",
-  fontSize: "0.75rem",
+  fontSize: "xs",
   fontWeight: "600",
   "@container reader (min-width: 40rem)": {
     display: "none",
@@ -107,10 +108,11 @@ const outlineToggle = css({
 });
 
 const outlineBody = css({
-  minHeight: "0",
+  minBlockSize: "0",
   overflowY: "auto",
   overscrollBehavior: "contain",
-  padding: "8px 7px 18px",
+  paddingBlock: "2 4.5",
+  paddingInline: "2",
   scrollbarColor: "{colors.scrollbarThumb} {colors.scrollbarTrack}",
   scrollbarWidth: "thin",
   display: "none",
@@ -124,39 +126,39 @@ const outlineBody = css({
 
 const outlineList = css({
   display: "grid",
-  gap: "2px",
+  gap: "0.5",
   margin: "0",
   padding: "0",
   listStyle: "none",
 });
 
 const outlineItem = css({
-  minWidth: "0",
+  minInlineSize: "0",
 });
 
 const outlineRow = css({
-  minWidth: "0",
+  minInlineSize: "0",
   display: "grid",
-  gridTemplateColumns: "44px minmax(0, 1fr)",
+  gridTemplateColumns: "auto minmax(0, 1fr)",
   alignItems: "stretch",
-  gap: "2px",
-  paddingInlineStart: "calc(var(--outline-depth) * 13px)",
-  borderRadius: "6px",
+  gap: "0.5",
+  paddingInlineStart: "calc(var(--outline-depth) * 0.8em)",
+  borderRadius: "md",
   '&[data-active="true"]': {
     background: "primarySoft",
-    boxShadow: "inset 2px 0 0 {colors.primary}",
+    boxShadow: "inset 0.125rem 0 0 {colors.primary}",
   },
 });
 
 const outlineDisclosure = css({
   ...tapTarget,
   alignSelf: "start",
-  width: "44px",
+  minInlineSize: "tap",
   border: "0",
-  borderRadius: "4px",
+  borderRadius: "sm",
   background: "transparent",
   color: "muted",
-  fontSize: "0.75rem",
+  fontSize: "xs",
   lineHeight: "1",
   "&:hover": {
     background: "primarySoft",
@@ -164,22 +166,22 @@ const outlineDisclosure = css({
 });
 
 const outlineDisclosurePlaceholder = css({
-  width: "44px",
+  minInlineSize: "tap",
 });
 
 const outlineLink = css({
   ...tapTarget,
-  minWidth: "0",
+  minInlineSize: "0",
   display: "flex",
   alignItems: "center",
-  gap: "6px",
+  gap: "1.5",
   border: "0",
-  borderRadius: "4px",
+  borderRadius: "sm",
   background: "transparent",
-  paddingInline: "5px 2px",
+  paddingInline: "1 0.5",
   color: "muted",
   textAlign: "start",
-  fontSize: "0.75rem",
+  fontSize: "xs",
   lineHeight: "1.35",
   "&:hover": {
     background: "primarySoft",
@@ -196,7 +198,7 @@ const outlineLink = css({
 });
 
 const outlineTitle = css({
-  minWidth: "0",
+  minInlineSize: "0",
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -207,26 +209,31 @@ const outlinePage = css({
   marginInlineStart: "auto",
   color: "placeholder",
   fontFamily: "mono",
-  fontSize: "9px",
+  fontSize: "0.75em",
   fontVariantNumeric: "tabular-nums",
 });
 
 const outlineMessage = css({
-  padding: "16px 12px",
+  display: "grid",
+  justifyItems: "start",
+  gap: "2.5",
+  paddingBlock: "4",
+  paddingInline: "3",
   color: "muted",
-  fontSize: "12px",
+  fontSize: "xs",
   lineHeight: "1.6",
 });
 
 const outlineRetry = css({
   ...tapTarget,
-  marginTop: "10px",
-  border: "1px solid {colors.lineStrong}",
+  borderWidth: "1px",
+  borderStyle: "solid",
+  borderColor: "lineStrong",
   borderRadius: "control",
   background: "transparent",
-  paddingInline: "10px",
+  paddingInline: "2.5",
   color: "primaryText",
-  fontSize: "0.75rem",
+  fontSize: "xs",
   fontWeight: "600",
 });
 

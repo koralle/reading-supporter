@@ -7,24 +7,24 @@ import { ChatMessage } from "./chat-message";
 import { ChatWelcome } from "./chat-welcome";
 
 const threadRoot = css({
-  height: "100%",
+  blockSize: "100%",
 });
 
 const threadViewport = css({
-  height: "100%",
-  minHeight: "0",
+  blockSize: "100%",
+  minBlockSize: "0",
   overflowY: "auto",
   overscrollBehavior: "contain",
-  padding: "16px",
+  padding: "4",
   scrollbarColor: "{colors.scrollbarThumb} {colors.scrollbarTrack}",
   scrollbarWidth: "thin",
 });
 
 const composerWrap = css({
   position: "sticky",
-  bottom: "0",
-  marginTop: "16px",
-  paddingTop: "12px",
+  insetBlockEnd: "0",
+  marginBlockStart: "4",
+  paddingBlockStart: "3",
   background: "linear-gradient(to bottom, transparent, {colors.surface} 15%)",
 });
 

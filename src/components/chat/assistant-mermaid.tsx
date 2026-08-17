@@ -12,7 +12,7 @@ const pending = css({
   fontSize: "0.9em",
   background: "stage",
   padding: "0.6em 0.75em",
-  borderRadius: "4px",
+  borderRadius: "sm",
 });
 
 export function AssistantMermaid({ code, isIncomplete }: CustomRendererProps) {

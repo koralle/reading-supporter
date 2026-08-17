@@ -10,9 +10,9 @@ const openButton = css({
   borderRadius: "control",
   background: "primary",
   color: "onPrimary",
-  fontSize: "0.875rem",
+  fontSize: "sm",
   fontWeight: "600",
-  paddingInline: "12px",
+  paddingInline: "3",
   transition: "background 160ms ease",
   _disabled: {
     cursor: "progress",
