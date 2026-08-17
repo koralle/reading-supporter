@@ -7,10 +7,10 @@ import { ErrorBoundary } from "react-error-boundary";
 
 const loading = css({
   display: "grid",
-  minBlockSize: "100svh",
+  minBlockSize: "100dvb",
   placeContent: "center",
   color: "muted",
-  fontSize: "14px",
+  fontSize: "sm",
 });
 
 function AppLoading() {

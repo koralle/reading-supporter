@@ -8,8 +8,8 @@ import { css } from "../../../styled-system/css";
 import { ChatThread } from "./chat-thread";
 
 const chatThread = css({
-  minHeight: "0",
-  height: "100%",
+  minBlockSize: "0",
+  blockSize: "100%",
 });
 
 type ChatPanelProps = {

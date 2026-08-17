@@ -13,8 +13,8 @@ import { pdfPlugins } from "./pdfPlugins";
 import { SelectionCapture } from "./selection-capture";
 
 const pdfStage = css({
-  height: "100%",
-  minHeight: "0",
+  blockSize: "100%",
+  minBlockSize: "0",
   minInlineSize: "0",
   position: "relative",
   overflow: "hidden",
@@ -22,23 +22,23 @@ const pdfStage = css({
 });
 
 const readerBody = css({
-  minHeight: "0",
-  height: "100%",
+  minBlockSize: "0",
+  blockSize: "100%",
   display: "grid",
-  gridTemplateColumns: "1fr",
+  gridTemplateColumns: "minmax(0, 1fr)",
   gridTemplateRows: "auto minmax(0, 1fr)",
   "@container reader (min-width: 40rem)": {
-    gridTemplateColumns: "240px minmax(0, 1fr)",
+    gridTemplateColumns: "clamp(12rem, 28cqi, 18rem) minmax(0, 1fr)",
     gridTemplateRows: "minmax(0, 1fr)",
   },
 });
 
 const engineLoading = css({
-  height: "100%",
+  blockSize: "100%",
   display: "grid",
   placeItems: "center",
   color: "muted",
-  fontSize: "14px",
+  fontSize: "sm",
 });
 
 type PdfReaderProps = {

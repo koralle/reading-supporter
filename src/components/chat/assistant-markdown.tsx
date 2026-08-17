@@ -17,7 +17,7 @@ const markdown = css({
   color: "fg",
   fontFamily: "body",
   "& :is(h1, h2, h3, h4, h5, h6):first-child": {
-    marginTop: "0!",
+    marginBlockStart: "0!",
   },
   "& [data-streamdown=heading-1]": {
     fontSize: "1.2em!",
@@ -39,7 +39,7 @@ const markdown = css({
     marginBlock: "0.45em",
   },
   "& p:first-child": {
-    marginTop: "0",
+    marginBlockStart: "0",
   },
   "& p:last-child": {
     marginBottom: "0",
@@ -63,7 +63,7 @@ const markdown = css({
   "& a": {
     color: "primary",
     textDecorationLine: "underline",
-    textUnderlineOffset: "2px",
+    textUnderlineOffset: "0.125em",
   },
   "& [data-streamdown=blockquote]": {
     color: "muted",
@@ -75,7 +75,7 @@ const markdown = css({
     background: "stage",
     paddingInline: "0.35em",
     paddingBlock: "0.1em",
-    borderRadius: "4px",
+    borderRadius: "sm",
   },
 });
 

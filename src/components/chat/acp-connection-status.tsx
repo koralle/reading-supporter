@@ -7,15 +7,15 @@ import { visuallyHidden } from "../../styles/visually-hidden";
 
 const connectionStatus = css({
   display: "flex",
-  alignItems: "center",
-  gap: "8px",
+  alignItems: "safe center",
+  gap: "2",
   color: "muted",
   fontFamily: "mono",
-  fontSize: "0.75rem",
+  fontSize: "xs",
   fontSizeAdjust: "from-font",
   _before: {
-    width: "6px",
-    height: "6px",
+    inlineSize: "0.5em",
+    aspectRatio: "1",
     borderRadius: "50%",
     background: "muted",
     content: '""',

@@ -38,11 +38,16 @@ export default defineConfig({
         },
         shadows: {
           menu: {
-            value: "0 8px 24px rgba(17, 24, 39, 0.12)",
+            value: "0 0.5rem 1.5rem rgba(17, 24, 39, 0.12)",
           },
         },
         radii: {
-          control: { value: "8px" },
+          control: { value: "0.5rem" },
+        },
+        sizes: {
+          // WCAG 2.5.8 の下限。固定の正方形ではなく min-block-size として使う。
+          tap: { value: "2.75rem" },
+          tapCoarse: { value: "3rem" },
         },
       },
     },

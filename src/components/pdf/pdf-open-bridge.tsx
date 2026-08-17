@@ -10,15 +10,16 @@ import { readSelectedPdf } from "../../lib/tauri";
 import { css } from "../../../styled-system/css";
 
 const pdfError = css({
-  margin: "16px",
-  padding: "12px 14px",
+  margin: "4",
+  paddingBlock: "3",
+  paddingInline: "3.5",
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "dangerBorder",
   borderRadius: "control",
   background: "dangerBg",
   color: "danger",
-  fontSize: "14px",
+  fontSize: "sm",
 });
 
 export type PdfChrome = {
